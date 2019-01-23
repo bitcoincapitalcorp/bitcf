@@ -56,7 +56,10 @@
 #include <QTimer>
 
 #include <QDragEnterEvent>
+#if QT_VERSION < 0x050000
 #include <QUrl>
+#endif
+#include <QMimeData>
 
 #include <iostream>
 
@@ -848,7 +851,11 @@ void EmercoinGUI::encryptWallet(bool status)
 
 void EmercoinGUI::backupWallet()
 {
+#if QT_VERSION < 0x050000
     QString saveDir = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+#else
+    QString saveDir = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/data/organization/application";
+#endif
     QString filename = QFileDialog::getSaveFileName(this, tr("Backup Wallet"), saveDir, tr("Wallet Data (*.dat)"));
     if(!filename.isEmpty()) {
         if(!walletModel->backupWallet(filename)) {

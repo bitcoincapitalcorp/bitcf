@@ -227,7 +227,7 @@ bool CreateTransactionWithInputTx(const vector<pair<CScript, int64> >& vecSend, 
         LOCK2(cs_main, pwalletMain->cs_wallet);
         {
             nFeeRet = nTransactionFee;
-            loop
+            ploop
             {
                 wtxNew.vin.clear();
                 wtxNew.vout.clear();
@@ -411,7 +411,7 @@ bool CNameDB::ScanNames(
         return false;
 
     unsigned int fFlags = DB_SET_RANGE;
-    loop
+    ploop
     {
         // Read next record
         CDataStream ssKey(SER_DISK, CLIENT_VERSION);

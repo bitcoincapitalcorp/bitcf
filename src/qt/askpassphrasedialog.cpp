@@ -7,6 +7,9 @@
 #include <QMessageBox>
 #include <QPushButton>
 #include <QKeyEvent>
+#if QT_VERSION >= 0x050000
+#include <QtGui/QIntValidator>
+#endif
 
 AskPassphraseDialog::AskPassphraseDialog(Mode mode, QWidget *parent) :
     QDialog(parent),
