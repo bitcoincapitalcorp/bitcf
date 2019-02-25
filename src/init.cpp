@@ -1151,9 +1151,6 @@ bool AppInitSanityChecks()
     return LockDataDirectory(true);
 }
 
-// DBG exch_test frol olegarch
-extern void exch_test();
-
 bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
 {
     const CChainParams& chainparams = Params();
@@ -1224,9 +1221,6 @@ bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
         strMasterPubKey = ck;
 
     int64_t nStart;
-
-    // DEBUG from olegarch - exchange test
-    if(GetBoolArg("-exchtest", false)) exch_test();
 
     // ********************************************************* Step 5: verify wallet database integrity
 #ifdef ENABLE_WALLET

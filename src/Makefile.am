@@ -173,7 +173,6 @@ BITCOIN_CORE_H = \
   emcdns.h \
   checkpoints_eb.h \
   ministun.h \
-  exch.h \
   kernelrecord.h
 
 
@@ -227,7 +226,6 @@ libbitcoin_server_a_SOURCES = \
   namecoin.cpp \
   emcdns.cpp \
   stun.cpp \
-  exch.cpp \
   https-cli.cpp \
   $(BITCOIN_CORE_H)
 

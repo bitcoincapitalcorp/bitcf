@@ -744,19 +744,3 @@ int WalletModel::getDefaultConfirmTarget() const
 {
     return nTxConfirmTarget;
 }
-
-// emercoin: get existing address from keypool without removing it from keypool
-bool WalletModel::getAddressForChange(std::string &sAddress)
-{
-    if (!wallet->IsLocked())
-        wallet->TopUpKeyPool();
-
-    CReserveKey reservekey(wallet);
-    CPubKey vchPubKey;
-    if (!reservekey.GetReservedKey(vchPubKey))
-        return false;
-    CKeyID keyID = vchPubKey.GetID();
-
-    sAddress = CBitcoinAddress(keyID).ToString();
-    return true;
-}

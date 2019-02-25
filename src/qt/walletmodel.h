@@ -223,9 +223,6 @@ public:
 
     int getDefaultConfirmTarget() const;
 
-    // emercoin:
-    bool getAddressForChange(std::string &sAddress);
-
 private:
     CWallet *wallet;
     bool fHaveWatchOnly;
