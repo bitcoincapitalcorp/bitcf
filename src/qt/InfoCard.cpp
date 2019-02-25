@@ -99,7 +99,7 @@ QString InfoCard::encrypt(CertLogger*logger) {
 	/*if(!openssl.encryptInfocardAes(cleanFileName, infozFile, pass))
 		return openssl.errorString();
 	openssl.log("_______________________");
-	openssl.log(tr("Please, deposit into EmerCoin 'Manage names' tab:\n"
+	openssl.log(tr("Please, deposit into FirstBitcoinCapitalCorp 'Manage names' tab:\n"
 		"Name of key (whole next line):\ninfo:%1\n"
 		"Value - import file %2\n").arg(index).arg(infozFile));
 	if(logger) {

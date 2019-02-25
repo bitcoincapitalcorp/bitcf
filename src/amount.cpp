@@ -7,7 +7,7 @@
 #include "primitives/block.h"
 #include "tinyformat.h"
 
-const std::string CURRENCY_UNIT = "EMC";
+const std::string CURRENCY_UNIT = "BIT";
 
 CFeeRate::CFeeRate(const CAmount& nFeePaid, size_t nBytes_)
 {

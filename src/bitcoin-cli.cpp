@@ -81,10 +81,10 @@ static int AppInitRPC(int argc, char* argv[])
         std::string strUsage = strprintf(_("%s RPC client version"), _(PACKAGE_NAME)) + " " + FormatFullVersion() + "\n";
         if (!IsArgSet("-version")) {
             strUsage += "\n" + _("Usage:") + "\n" +
-                  "  emercoin-cli [options] <command> [params]  " + strprintf(_("Send command to %s"), _(PACKAGE_NAME)) + "\n" +
-                  "  emercoin-cli [options] -named <command> [name=value] ... " + strprintf(_("Send command to %s (with named arguments)"), _(PACKAGE_NAME)) + "\n" +
-                  "  emercoin-cli [options] help                " + _("List commands") + "\n" +
-                  "  emercoin-cli [options] help <command>      " + _("Get help for a command") + "\n";
+                  "  bitcf-cli [options] <command> [params]  " + strprintf(_("Send command to %s"), _(PACKAGE_NAME)) + "\n" +
+                  "  bitcf-cli [options] -named <command> [name=value] ... " + strprintf(_("Send command to %s (with named arguments)"), _(PACKAGE_NAME)) + "\n" +
+                  "  bitcf-cli [options] help                " + _("List commands") + "\n" +
+                  "  bitcf-cli [options] help <command>      " + _("Get help for a command") + "\n";
 
             strUsage += "\n" + HelpMessageCli();
         }
@@ -251,7 +251,7 @@ UniValue CallRPC(const std::string& strMethod, const UniValue& params)
         throw std::runtime_error("no response from server");
 
     // emercoin:
-    // we get emercoind output (possibly binary) of .write() that either:
+    // we get bitcfd output (possibly binary) of .write() that either:
     // 1) escapes some unicode characters (defined in univalue_escapes.h)
     // 2) escapes all unicode character as in legacy json_spirit
     // we must get back the same string byte by byte by invoking .read() with mode=1 or mode=2.

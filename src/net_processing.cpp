@@ -111,7 +111,7 @@ namespace {
     };
     std::map<uint256, std::pair<NodeId, std::list<QueuedBlock>::iterator> > mapBlocksInFlight;
 
-    /** emercoin: blocks that are waiting to be processed, the key points to previous CBlockIndex entry */
+    /** bitcf: blocks that are waiting to be processed, the key points to previous CBlockIndex entry */
     struct WaitElement {
         std::shared_ptr<CBlock> pblock;
         int64_t time;

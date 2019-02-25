@@ -51,7 +51,7 @@
 #include <boost/thread.hpp>
 
 #if defined(NDEBUG)
-# error "Emercoin cannot be compiled without assertions."
+# error "FirstBitcoinCapitalCorp cannot be compiled without assertions."
 #endif
 
 /**
@@ -93,8 +93,8 @@ static void CheckBlockIndex(const Consensus::Params& consensusParams);
 /** Constant stuff for coinbase transactions we create: */
 CScript COINBASE_FLAGS;
 
-const std::string strMessageMagic = "EmerCoin Signed Message:\n";
-CHooks* hooks = InitHook(); //this adds namecoin hooks which allow splicing of code inside standart emercoin functions.
+const std::string strMessageMagic = "FirstBitcoinCapitalCorp Signed Message:\n";
+CHooks* hooks = InitHook(); //this adds namecoin hooks which allow splicing of code inside standart FirstBitcoinCapitalCorp functions.
 
 std::map<uint256, std::shared_ptr<CAuxPow>> mapDirtyAuxPow;
 
@@ -993,7 +993,7 @@ bool AcceptToMemoryPoolWorker(CTxMemPool& pool, CValidationState& state, const C
         // Remove conflicting transactions from the mempool
         BOOST_FOREACH(const CTxMemPool::txiter it, allConflicting)
         {
-            LogPrint("mempool", "replacing tx %s with %s for %s EMC additional fees, %d delta bytes\n",
+            LogPrint("mempool", "replacing tx %s with %s for %s BIT additional fees, %d delta bytes\n",
                     it->GetTx().GetHash().ToString(),
                     hash.ToString(),
                     FormatMoney(nModifiedFees - nConflictingFees),
@@ -1845,7 +1845,7 @@ bool FindUndoPos(CValidationState &state, int nFile, CDiskBlockPos &pos, unsigne
 static CCheckQueue<CScriptCheck> scriptcheckqueue(128);
 
 void ThreadScriptCheck() {
-    RenameThread("emercoin-scriptch");
+    RenameThread("bitcf-scriptch");
     scriptcheckqueue.Thread();
 }
 
@@ -3204,7 +3204,7 @@ bool ContextualCheckBlockHeader(const CBlockHeader& block, bool fProofOfStake, C
     }
     else
     {
-        // this is needed only for emercoin official blockchain, because of mistake we made at the beginning
+        // this is needed only for FirstBitcoinCapitalCorp official blockchain, because of mistake we made at the beginning
         unsigned int check = GetNextTargetRequired(pindexPrev, fProofOfStake, consensusParams);
         unsigned int max_error = check / 100000;
         if (!(block.nBits >= check - max_error && block.nBits <= check + max_error)) // +- 0.001% interval

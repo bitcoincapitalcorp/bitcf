@@ -179,7 +179,7 @@ private:
     void AddToBlock(CTxMemPool::txiter iter);
 
     // Methods for how to add transactions to a block.
-    /** emercoin: add transactions at random */
+    /** bitcf: add transactions at random */
     void addTxs();
     /** Add transactions based on tx "priority" */
     void addPriorityTxs();
@@ -225,6 +225,6 @@ namespace boost {
 /** Run the stake minter thread */
 void MintStake(boost::thread_group& threadGroup, CWallet* pwallet);
 /** Run the miner threads */
-void GenerateEmercoins(bool fGenerate, int nThreads, const CChainParams& chainparams);
+void GenerateBits(bool fGenerate, int nThreads, const CChainParams& chainparams);
 
 #endif // BITCOIN_MINER_H

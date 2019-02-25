@@ -211,7 +211,7 @@ public:
     bool IsDust(const CFeeRate &minRelayTxFee) const
     {
         // return (nValue < GetDustThreshold(minRelayTxFee));
-        return false; // there is no dust in emercoin
+        return false; // there is no dust in FirstBitcoinCapitalCorp
     }
 
     friend bool operator==(const CTxOut& a, const CTxOut& b)

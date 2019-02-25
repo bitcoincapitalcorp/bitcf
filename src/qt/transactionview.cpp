@@ -79,7 +79,7 @@ struct TransactionView::TableView: public QTableView{
         }
         QString s;
         if(!rowToIndex.isEmpty()) {
-            s = tr("%1 EMC selected in %2 transactions")
+            s = tr("%1 BIT selected in %2 transactions")
                     .arg(format(amountPos + amountNeg))
                     .arg(rowToIndex.count());
             if(amountNeg!=0) {

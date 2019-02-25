@@ -36,7 +36,7 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //
-// EmercoinMiner
+// BitcfMiner
 //
 
 //
@@ -770,7 +770,7 @@ static bool ProcessBlockFound(const CBlock* pblock, const CChainParams& chainpar
     {
         LOCK(cs_main);
         if (pblock->hashPrevBlock != chainActive.Tip()->GetBlockHash())
-            return error("EmercoinMiner: generated block is stale");
+            return error("BitcfMiner: generated block is stale");
     }
 
     // Inform about the new block
@@ -788,7 +788,7 @@ static bool ProcessBlockFound(const CBlock* pblock, const CChainParams& chainpar
 void PoSMiner(CWallet *pwallet)
 {
     LogPrintf("CPUMiner started for proof-of-stake\n");
-    RenameThread("emercoin-stake-minter");
+    RenameThread("bitcf-stake-minter");
 
     unsigned int nExtraNonce = 0;
 
@@ -844,7 +844,7 @@ void PoSMiner(CWallet *pwallet)
                     MilliSleep(pos_timio);
                     continue;
                 }
-                LogPrintf("Error in EmercoinMiner: Keypool ran out, please call keypoolrefill before restarting the mining thread\n");
+                LogPrintf("Error in BitcfMiner: Keypool ran out, please call keypoolrefill before restarting the mining thread\n");
                 return;
             }
             CBlock *pblock = &pblocktemplate->block;
@@ -873,13 +873,13 @@ void PoSMiner(CWallet *pwallet)
     }
     catch (boost::thread_interrupted)
     {
-        LogPrintf("EmercoinMiner terminated\n");
+        LogPrintf("BitcfMiner terminated\n");
     return;
         // throw;
     }
     catch (const std::runtime_error &e)
     {
-        LogPrintf("EmercoinMiner runtime error: %s\n", e.what());
+        LogPrintf("BitcfMiner runtime error: %s\n", e.what());
         return;
     }
 }
@@ -948,10 +948,10 @@ bool static ScanHash(const CBlockHeader *pblock, uint32_t& nNonce, uint256 *phas
     }
 }
 
-void static EmercoinMiner(const CChainParams& chainparams)
+void static BitcfMiner(const CChainParams& chainparams)
 {
-    LogPrintf("EmercoinMiner started\n");
-    RenameThread("emercoin-miner");
+    LogPrintf("BitcfMiner started\n");
+    RenameThread("bitcf-miner");
 
     unsigned int nExtraNonce = 0;
 
@@ -982,13 +982,13 @@ void static EmercoinMiner(const CChainParams& chainparams)
             std::unique_ptr<CBlockTemplate> pblocktemplate(BlockAssembler(Params()).CreateNewBlock(coinbaseScript->reserveScript, true, nullptr, nullptr));
             if (!pblocktemplate.get())
             {
-                LogPrintf("Error in EmercoinMiner: Keypool ran out, please call keypoolrefill before restarting the mining hread\n");
+                LogPrintf("Error in BitcfMiner: Keypool ran out, please call keypoolrefill before restarting the mining hread\n");
                 return;
             }
             CBlock *pblock = &pblocktemplate->block;
             IncrementExtraNonce(pblock, pindexPrev, nExtraNonce);
 
-            LogPrintf("Running EmercoinMiner with %u transactions in block (%u bytes)\n", pblock->vtx.size(),
+            LogPrintf("Running BitcfMiner with %u transactions in block (%u bytes)\n", pblock->vtx.size(),
                 ::GetSerializeSize(*pblock, SER_NETWORK, PROTOCOL_VERSION));
 
             //
@@ -1015,7 +1015,7 @@ void static EmercoinMiner(const CChainParams& chainparams)
                             continue;
                         }
 
-                        LogPrintf("EmercoinMiner:\n");
+                        LogPrintf("BitcfMiner:\n");
                         LogPrintf("proof-of-work found  \n  hash: %s  \ntarget: %s\n", hash.GetHex(), hashTarget.GetHex());
                         ProcessBlockFound(pblock, chainparams);
                         coinbaseScript->KeepScript();
@@ -1054,17 +1054,17 @@ void static EmercoinMiner(const CChainParams& chainparams)
     }
     catch (const boost::thread_interrupted&)
     {
-        LogPrintf("EmercoinMiner terminated\n");
+        LogPrintf("BitcfMiner terminated\n");
         throw;
     }
     catch (const std::runtime_error &e)
     {
-        LogPrintf("EmercoinMiner runtime error: %s\n", e.what());
+        LogPrintf("BitcfMiner runtime error: %s\n", e.what());
         return;
     }
 }
 
-void GenerateEmercoins(bool fGenerate, int nThreads, const CChainParams& chainparams)
+void GenerateBits(bool fGenerate, int nThreads, const CChainParams& chainparams)
 {
     static boost::thread_group* minerThreads = NULL;
 
@@ -1083,5 +1083,5 @@ void GenerateEmercoins(bool fGenerate, int nThreads, const CChainParams& chainpa
 
     minerThreads = new boost::thread_group();
     for (int i = 0; i < nThreads; i++)
-        minerThreads->create_thread(boost::bind(&EmercoinMiner, boost::cref(chainparams)));
+        minerThreads->create_thread(boost::bind(&BitcfMiner, boost::cref(chainparams)));
 }

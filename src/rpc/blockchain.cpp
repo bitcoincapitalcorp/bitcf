@@ -939,8 +939,8 @@ UniValue gettxout(const JSONRPCRequest& request)
             "     \"hex\" : \"hex\",        (string) \n"
             "     \"reqSigs\" : n,          (numeric) Number of required signatures\n"
             "     \"type\" : \"pubkeyhash\", (string) The type, eg pubkeyhash\n"
-            "     \"addresses\" : [          (array of string) array of emercoin addresses\n"
-            "        \"address\"     (string) emercoin address\n"
+            "     \"addresses\" : [          (array of string) array of FirstBitcoinCapitalCorp addresses\n"
+            "        \"address\"     (string) FirstBitcoinCapitalCorp address\n"
             "        ,...\n"
             "     ]\n"
             "  },\n"
@@ -1725,7 +1725,7 @@ static const CRPCCommand commands[] =
     { "blockchain",         "getrawmempool",          &getrawmempool,          true,  {"verbose"} },
     { "blockchain",         "gettxout",               &gettxout,               true,  {"txid","n","include_mempool"} },
     { "blockchain",         "gettxoutsetinfo",        &gettxoutsetinfo,        true,  {} },
-// emc - disabled until correctly implemented
+// bit - disabled until correctly implemented
 //    { "blockchain",         "pruneblockchain",        &pruneblockchain,        true,  {"height"} },
     { "blockchain",         "verifychain",            &verifychain,            true,  {"checklevel","nblocks"} },
 

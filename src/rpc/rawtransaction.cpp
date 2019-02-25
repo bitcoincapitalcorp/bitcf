@@ -186,7 +186,7 @@ UniValue getrawtransaction(const JSONRPCRequest& request)
             "         \"reqSigs\" : n,            (numeric) The required sigs\n"
             "         \"type\" : \"pubkeyhash\",  (string) The type, eg 'pubkeyhash'\n"
             "         \"addresses\" : [           (json array of string)\n"
-            "           \"address\"        (string) emercoin address\n"
+            "           \"address\"        (string) FirstBitcoinCapitalCorp address\n"
             "           ,...\n"
             "         ]\n"
             "       }\n"
@@ -380,7 +380,7 @@ UniValue createrawtransaction(const JSONRPCRequest& request)
             "     ]\n"
             "2. \"outputs\"               (object, required) a json object with outputs\n"
             "    {\n"
-            "      \"address\": x.xxx,    (numeric or string, required) The key is the emercoin address, the numeric value (can be string) is the " + CURRENCY_UNIT + " amount\n"
+            "      \"address\": x.xxx,    (numeric or string, required) The key is the FirstBitcoinCapitalCorp address, the numeric value (can be string) is the " + CURRENCY_UNIT + " amount\n"
             "      \"data\": \"hex\"      (string, required) The key is \"data\", the value is hex encoded data\n"
             "      ,...\n"
             "    }\n"
@@ -453,7 +453,7 @@ UniValue createrawtransaction(const JSONRPCRequest& request)
         } else {
             CBitcoinAddress address(name_);
             if (!address.IsValid())
-                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, string("Invalid Emercoin address: ")+name_);
+                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, string("Invalid FirstBitcoinCapitalCorp address: ")+name_);
 
             if (setAddress.count(address))
                 throw JSONRPCError(RPC_INVALID_PARAMETER, string("Invalid parameter, duplicated address: ")+name_);
@@ -511,7 +511,7 @@ UniValue decoderawtransaction(const JSONRPCRequest& request)
             "         \"reqSigs\" : n,            (numeric) The required sigs\n"
             "         \"type\" : \"pubkeyhash\",  (string) The type, eg 'pubkeyhash'\n"
             "         \"addresses\" : [           (json array of string)\n"
-            "           \"12tvKAXCxZjSmdNbao16dKXC8tRWfcF5oc\"   (string) emercoin address\n"
+            "           \"12tvKAXCxZjSmdNbao16dKXC8tRWfcF5oc\"   (string) FirstBitcoinCapitalCorp address\n"
             "           ,...\n"
             "         ]\n"
             "       }\n"
@@ -554,7 +554,7 @@ UniValue decodescript(const JSONRPCRequest& request)
             "  \"type\":\"type\", (string) The output type\n"
             "  \"reqSigs\": n,    (numeric) The required signatures\n"
             "  \"addresses\": [   (json array of string)\n"
-            "     \"address\"     (string) emercoin address\n"
+            "     \"address\"     (string) FirstBitcoinCapitalCorp address\n"
             "     ,...\n"
             "  ],\n"
             "  \"p2sh\",\"address\" (string) address of P2SH script wrapping this redeem script (not returned if the script is already a P2SH).\n"
@@ -1007,7 +1007,7 @@ UniValue randpay_createtx(const JSONRPCRequest& request)
             "randpay_createtx amount \"addrchap\" risk timio [naive]\n"
             "\nCreates randpay tx.\n"
             "\nArguments:\n"
-            "1. amount         (numeric, required) Amount of emc to send.\n"
+            "1. amount         (numeric, required) Amount of bit to send.\n"
             "2. \"addrchap\"   (string, required)  ?\n"
             "3. risk           (numeric, required) 1 / probability of success for random payments.\n"
 			"4. timeout        (numeric, required) Locks utxo from being spent in another tx for timio seconds.\n"

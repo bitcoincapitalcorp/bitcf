@@ -197,10 +197,10 @@ void Shutdown()
     /// for example if the data directory was found to be locked.
     /// Be sure that anything that writes files or flushes caches only does this if the respective
     /// module was initialized.
-    RenameThread("emercoin-shutoff");
+    RenameThread("bitcf-shutoff");
     mempool.AddTransactionsUpdated(1);
 #ifdef ENABLE_WALLET
-    GenerateEmercoins(false, 0, Params());
+    GenerateBits(false, 0, Params());
 #endif
     StopHTTPRPC();
     StopREST();
@@ -360,7 +360,7 @@ std::string HelpMessage(HelpMessageMode mode)
 #ifndef WIN32
     strUsage += HelpMessageOpt("-pid=<file>", strprintf(_("Specify pid file (default: %s)"), BITCOIN_PID_FILENAME));
 #endif
-// emc - disabled until correctly implemented
+// bit - disabled until correctly implemented
 //    strUsage += HelpMessageOpt("-prune=<n>", strprintf(_("Reduce storage requirements by enabling pruning (deleting) of old blocks. This allows the pruneblockchain RPC to be called to delete specific blocks, and enables automatic pruning of old blocks if a target size in MiB is provided. This mode is incompatible with -txindex and -rescan. "
 //            "Warning: Reverting this setting requires re-downloading the entire blockchain. "
 //            "(default: 0 = disable pruning blocks, 1 = allow manual pruning via RPC, >%u = automatically prune block files to stay under the specified target size in MiB)"), MIN_DISK_SPACE_FOR_BLOCK_FILES / 1024 / 1024));
@@ -521,8 +521,8 @@ std::string HelpMessage(HelpMessageMode mode)
 
 std::string LicenseInfo()
 {
-    const std::string URL_SOURCE_CODE = "<https://github.com/Emercoin/emercoin>";
-    const std::string URL_WEBSITE = "<https://emercoin.com>";
+    const std::string URL_SOURCE_CODE = "<https://github.com/bitcf/bitcf>";
+    const std::string URL_WEBSITE = "<https://firstbitcoin.io>";
 
     return CopyrightHolders(strprintf(_("Copyright (C) %i-%i"), 2009, COPYRIGHT_YEAR) + " ") + "\n" +
            "\n" +
@@ -625,7 +625,7 @@ void CleanupBlockRevFiles()
 void ThreadImport(std::vector<boost::filesystem::path> vImportFiles)
 {
     const CChainParams& chainparams = Params();
-    RenameThread("emercoin-loadblk");
+    RenameThread("bitcf-loadblk");
 
     {
     CImportingNow imp;
@@ -803,7 +803,7 @@ void InitLogging()
     fLogIPs = GetBoolArg("-logips", DEFAULT_LOGIPS);
 
     LogPrintf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-    LogPrintf("Emercoin version %s\n", FormatFullVersion());
+    LogPrintf("FirstBitcoinCapitalCorp version %s\n", FormatFullVersion());
 }
 
 namespace { // Variables internal to initialization process only
@@ -902,10 +902,10 @@ bool AppInitParameterInteraction()
 
     // if using block pruning, then disallow txindex
     if (GetArg("-prune", 0)) {
-// emc - disabled until correctly implemented
+// bit - disabled until correctly implemented
 //        if (GetBoolArg("-txindex", DEFAULT_TXINDEX))
 //            return InitError(_("Prune mode is incompatible with -txindex."));
-        return InitError(_("Prune mode is disabled in emercoin."));
+        return InitError(_("Prune mode is disabled in FirstBitcoinCapitalCorp."));
     }
 
     // Make sure enough file descriptors are available
@@ -993,7 +993,7 @@ bool AppInitParameterInteraction()
         nScriptCheckThreads = MAX_SCRIPTCHECK_THREADS;
 
     // block pruning; get the amount of disk space (in MiB) to allot for block & undo files
-    // emc - disabled until correctly implemented
+    // bit - disabled until correctly implemented
     // int64_t nPruneArg = GetArg("-prune", 0);
     int64_t nPruneArg = 0;
     if (nPruneArg < 0) {
@@ -1733,7 +1733,7 @@ bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
     if (pwalletMain && GetBoolArg("-stakegen", true))
         MintStake(threadGroup, pwalletMain);
     // Generate coins in the background
-    GenerateEmercoins(GetBoolArg("-gen", DEFAULT_GENERATE), GetArg("-genproclimit", DEFAULT_GENERATE_THREADS), chainparams);
+    GenerateBits(GetBoolArg("-gen", DEFAULT_GENERATE), GetArg("-genproclimit", DEFAULT_GENERATE_THREADS), chainparams);
 #endif
 
     // init emcdns. WARNING: this should be done after hooks initialization

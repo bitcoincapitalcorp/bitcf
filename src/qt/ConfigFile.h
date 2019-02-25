@@ -2,7 +2,7 @@
 #pragma once
 #include <QFile>
 
-//emercoin.conf file reader/writer
+//bitcf.conf file reader/writer
 class ConfigFile: public QFile {
 	public:
 		ConfigFile();

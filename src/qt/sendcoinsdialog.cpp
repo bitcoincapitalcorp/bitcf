@@ -776,7 +776,7 @@ void SendCoinsDialog::coinControlChangeEdited(const QString& text)
         }
         else if (!addr.IsValid()) // Invalid address
         {
-            ui->labelCoinControlChangeLabel->setText(tr("Warning: Invalid Emercoin address"));
+            ui->labelCoinControlChangeLabel->setText(tr("Warning: Invalid FirstBitcoinCapitalCorp address"));
         }
         else // Valid address
         {

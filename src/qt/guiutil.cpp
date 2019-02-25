@@ -113,7 +113,7 @@ void setupAddressWidget(QValidatedLineEdit *widget, QWidget *parent)
     widget->setFont(fixedPitchFont());
     // We don't want translators to use own addresses in translations
     // and this is the only place, where this address is supplied.
-    widget->setPlaceholderText(QObject::tr("Enter an Emercoin address or name (e.g. %1)").arg(
+    widget->setPlaceholderText(QObject::tr("Enter an FirstBitcoinCapitalCorp address or name (e.g. %1)").arg(
         QString::fromStdString(DummyAddress(Params()))));
     widget->setValidator(new BitcoinAddressEntryValidator(parent));
     widget->setCheckValidator(new BitcoinAddressCheckValidator(parent));
@@ -231,13 +231,13 @@ bool parseBitcoinURI(QString uri, std::vector<SendCoinsRecipient> &out)
     //
     //    Cannot handle this later, because bitcoin:// will cause Qt to see the part after // as host,
     //    which will lower-case it (and thus invalidate the address).
-    if(uri.startsWith("emercoin://", Qt::CaseInsensitive))
-        uri.replace(0, 11, "emercoin:");
+    if(uri.startsWith("bitcf://", Qt::CaseInsensitive))
+        uri.replace(0, 8, "bitcf:");
 
     QUrl uriInstance(uri);
 
     // return if URI is not valid or is no bitcoin: URI
-    if(!uriInstance.isValid() || uriInstance.scheme() != QString("emercoin"))
+    if(!uriInstance.isValid() || uriInstance.scheme() != QString("bitcf"))
         return false;
 
     out.clear();
@@ -247,7 +247,7 @@ bool parseBitcoinURI(QString uri, std::vector<SendCoinsRecipient> &out)
 
 QString formatBitcoinURI(const SendCoinsRecipient &info)
 {
-    QString ret = QString("emercoin:%1").arg(info.address);
+    QString ret = QString("bitcf:%1").arg(info.address);
     int paramCount = 0;
 
     if (info.amount)
@@ -279,7 +279,7 @@ bool isDust(const QString& address, const CAmount& amount)
 //    CScript script = GetScriptForDestination(dest);
 //    CTxOut txOut(amount, script);
 //    return txOut.IsDust(dustRelayFee);
-    return false; // there is no dust in emercoin
+    return false; // there is no dust in bitcf
 }
 
 QString HtmlEscape(const QString& str, bool fMultiLine)
@@ -615,10 +615,10 @@ boost::filesystem::path static StartupShortcutPath()
 {
     std::string chain = ChainNameFromCommandLine();
     if (chain == CBaseChainParams::MAIN)
-        return GetSpecialFolderPath(CSIDL_STARTUP) / "Emercoin.lnk";
+        return GetSpecialFolderPath(CSIDL_STARTUP) / "Bitcf.lnk";
     if (chain == CBaseChainParams::TESTNET) // Remove this special case when CBaseChainParams::TESTNET = "testnet4"
-        return GetSpecialFolderPath(CSIDL_STARTUP) / "Emercoin (testnet).lnk";
-    return GetSpecialFolderPath(CSIDL_STARTUP) / strprintf("Emercoin (%s).lnk", chain);
+        return GetSpecialFolderPath(CSIDL_STARTUP) / "Bitcf (testnet).lnk";
+    return GetSpecialFolderPath(CSIDL_STARTUP) / strprintf("Bitcf (%s).lnk", chain);
 }
 
 bool GetStartOnSystemStartup()
@@ -715,8 +715,8 @@ boost::filesystem::path static GetAutostartFilePath()
 {
     std::string chain = ChainNameFromCommandLine();
     if (chain == CBaseChainParams::MAIN)
-        return GetAutostartDir() / "emercoin.desktop";
-    return GetAutostartDir() / strprintf("emercoin-%s.lnk", chain);
+        return GetAutostartDir() / "bitcf.desktop";
+    return GetAutostartDir() / strprintf("bitcf-%s.lnk", chain);
 }
 
 bool GetStartOnSystemStartup()
@@ -759,9 +759,9 @@ bool SetStartOnSystemStartup(bool fAutoStart)
         optionFile << "[Desktop Entry]\n";
         optionFile << "Type=Application\n";
         if (chain == CBaseChainParams::MAIN)
-            optionFile << "Name=Emercoin\n";
+            optionFile << "Name=bitcf\n";
         else
-            optionFile << strprintf("Name=Emercoin (%s)\n", chain);
+            optionFile << strprintf("Name=bitcf (%s)\n", chain);
         optionFile << "Exec=" << pszExePath << strprintf(" -min -testnet=%d -regtest=%d\n", GetBoolArg("-testnet", false), GetBoolArg("-regtest", false));
         optionFile << "Terminal=false\n";
         optionFile << "Hidden=false\n";

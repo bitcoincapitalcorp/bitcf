@@ -63,7 +63,7 @@ SaltedTxidHasher::SaltedTxidHasher() : k0(GetRand(std::numeric_limits<uint64_t>:
 CCoinsViewCache::CCoinsViewCache(CCoinsView *baseIn) : CCoinsViewBacked(baseIn), hasModifier(false), cachedCoinsUsage(0)
 {
     // emercoin: insert special randpay utxo that can be spent unlimited number of times
-    // you can only spent 0 emc from it
+    // you can only spent 0 bit from it
     std::pair<CCoinsMap::iterator, bool> ret = cacheCoins.insert(std::make_pair(randpaytx, CCoinsCacheEntry()));
     if (!ret.second)
         throw std::logic_error("Failed to insert randpay utxo!");

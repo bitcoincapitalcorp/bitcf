@@ -16,7 +16,7 @@
 #include "../net.h"
 
 //test links:
-//emercoin://randpay?amount=0.001&chap=ffaaaa&risk=14&timeout=30
+//bitcf://randpay?amount=0.001&chap=ffaaaa&risk=14&timeout=30
 //&submit=ESCAPED_URI
 RandPayRequest::RandPayRequest(const QUrl & u, PaymentServer* server): QUrlQuery(u) {
 	_server = server;
@@ -176,8 +176,8 @@ struct RandPayRequest::Dialog: public QMessageBox {
 		defaultButton()->setText(_defaultText + QString(" (%1)").arg(_secsLeft));
 	}
 	void setTextBy(const RandPayRequest & r) {
-		setText(tr(R"STR(Actual payment: %1 EMC
-TX amount: %2 EMC
+		setText(tr(R"STR(Actual payment: %1 BIT
+TX amount: %2 BIT
 Probability: 1/%3
 Timeout: %4s.)STR")
 			.arg(r._amount)
@@ -228,6 +228,6 @@ void RandPayRequest::readConfig() {
 }
 bool RandPayRequest::isRandPayUrl(const QUrl& url) {
 	return url.isValid()
-			&& url.scheme() == QStringLiteral("emercoin")
+			&& url.scheme() == QStringLiteral("bitcf")
 			&& url.host() == QStringLiteral("randpay");
 }

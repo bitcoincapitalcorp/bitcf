@@ -189,7 +189,7 @@
        <item>
         <widget class="QCheckBox" name="mapPortUpnp">
          <property name="toolTip">
-          <string>Automatically open the Emercoin client port on the router. This only works when your router supports UPnP and it is enabled.</string>
+          <string>Automatically open the FirstBitcoinCapitalCorp client port on the router. This only works when your router supports UPnP and it is enabled.</string>
          </property>
          <property name="text">
           <string>Map port using &amp;UPnP</string>
@@ -209,7 +209,7 @@
        <item>
         <widget class="QCheckBox" name="connectSocks">
          <property name="toolTip">
-          <string>Connect to the Emercoin network through a SOCKS5 proxy.</string>
+          <string>Connect to the FirstBitcoinCapitalCorp network through a SOCKS5 proxy.</string>
          </property>
          <property name="text">
           <string>&amp;Connect through SOCKS5 proxy (default proxy):</string>
@@ -396,7 +396,7 @@
        <item>
         <widget class="QCheckBox" name="connectSocksTor">
          <property name="toolTip">
-          <string>Connect to the Emercoin network through a separate SOCKS5 proxy for Tor hidden services.</string>
+          <string>Connect to the FirstBitcoinCapitalCorp network through a separate SOCKS5 proxy for Tor hidden services.</string>
          </property>
          <property name="text">
           <string>Use separate SOCKS5 proxy to reach peers via Tor hidden services:</string>
@@ -716,7 +716,7 @@
        <item row="6" column="0" colspan="2">
         <widget class="QLabel" name="labelCheckRpc">
          <property name="text">
-          <string>To check, restart wallet and click &lt;a href=&quot;http://127.0.0.1:6662&quot;&gt;this hyperlink&lt;/a&gt; to open in browser.</string>
+          <string>To check, restart wallet and click &lt;a href=&quot;http://127.0.0.1:16662&quot;&gt;this hyperlink&lt;/a&gt; to open in browser.</string>
          </property>
          <property name="openExternalLinks">
           <bool>true</bool>
@@ -739,7 +739,7 @@
        <item row="0" column="0" colspan="2">
         <widget class="QLabel" name="labelEmercoinConf">
          <property name="text">
-          <string>This window edits &lt;a href=&quot;emercoin.conf&quot;&gt;emercoin.conf&lt;/a&gt; file.</string>
+          <string>This window edits &lt;a href=&quot;bitcf.conf&quot;&gt;bitcf.conf&lt;/a&gt; file.</string>
          </property>
         </widget>
        </item>

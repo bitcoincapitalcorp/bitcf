@@ -48,10 +48,10 @@ static const int MAX_URI_LENGTH = 255;
 /* Number of frames in spinner animation */
 #define SPINNER_FRAMES 36
 
-#define QAPP_ORG_NAME "Emercoin"
-#define QAPP_ORG_DOMAIN "emercoin.com"
-#define QAPP_APP_NAME_DEFAULT "Emercoin-Qt"
-#define QAPP_APP_NAME_TESTNET "Emercoin-Qt-testnet"
+#define QAPP_ORG_NAME "FirstBitcoinCapitalCorp"
+#define QAPP_ORG_DOMAIN "firstbitcoin.io"
+#define QAPP_APP_NAME_DEFAULT "FirstBitcoinCapitalCorp"
+#define QAPP_APP_NAME_TESTNET "FirstBitcoinCapitalCorp-testnet"
 
 /* Colors for minting tab for each coin age group */
 #define COLOR_MINT_YOUNG QColor(128, 64, 64)

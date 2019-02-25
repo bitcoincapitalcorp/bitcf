@@ -73,7 +73,7 @@ NetworkStyle::NetworkStyle(const QString &_appName, const int iconColorHueShift,
     titleAddText(qApp->translate("SplashScreen", _titleAddText))
 {
     // load pixmap
-    QPixmap pixmap(":/icons/emercoin");
+    QPixmap pixmap(":/icons/bitcf");
     QPixmap splash(":/icons/splash");
 
     if(iconColorHueShift != 0 && iconColorSaturationReduction != 0)

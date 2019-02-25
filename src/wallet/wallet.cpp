@@ -2294,7 +2294,7 @@ bool CWallet::SelectCoinsMinConf(const CAmount& nTargetValue, const int nConfMin
   // If possible, solve subset sum by dynamic programming
   // Adeed by olegarch
 
-  // Maximal DP array size. Default=0.5G (12,800EMC)
+  // Maximal DP array size. Default=0.5G (12,800BIT)
   static uint32_t nMaxDP = 0;
   if(nMaxDP == 0)
       nMaxDP = GetArg("-maxdp", 128 * 1024 * 1024);
@@ -4257,7 +4257,7 @@ bool CWallet::ParameterInteraction()
     }
     nTxConfirmTarget = GetArg("-txconfirmtarget", DEFAULT_TX_CONFIRM_TARGET);
     bSpendZeroConfChange = GetBoolArg("-spendzeroconfchange", DEFAULT_SPEND_ZEROCONF_CHANGE);
-    fSendFreeTransactions = DEFAULT_SEND_FREE_TRANSACTIONS;  // disabled in emercoin
+    fSendFreeTransactions = DEFAULT_SEND_FREE_TRANSACTIONS;  // disabled in FirstBitcoinCapitalCorp
     fWalletRbf = GetBoolArg("-walletrbf", DEFAULT_WALLET_RBF);
 
     if (fSendFreeTransactions && GetArg("-limitfreerelay", DEFAULT_LIMITFREERELAY) <= 0)

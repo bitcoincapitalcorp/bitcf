@@ -66,11 +66,11 @@ TESTS =
 BENCHMARKS =
 
 if BUILD_BITCOIND
-  bin_PROGRAMS += emercoind
+  bin_PROGRAMS += bitcfd
 endif
 
 if BUILD_BITCOIN_UTILS
-  bin_PROGRAMS += emercoin-cli emercoin-tx
+  bin_PROGRAMS += bitcf-cli bitcf-tx
 endif
 
 .PHONY: FORCE check-symbols check-security
@@ -376,16 +376,16 @@ nodist_libbitcoin_util_a_SOURCES = $(srcdir)/obj/build.h
 #
 
 # bitcoind binary #
-emercoind_SOURCES = bitcoind.cpp
-emercoind_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-emercoind_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-emercoind_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+bitcfd_SOURCES = bitcoind.cpp
+bitcfd_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+bitcfd_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+bitcfd_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-emercoind_SOURCES += bitcoind-res.rc
+bitcfd_SOURCES += bitcoind-res.rc
 endif
 
-emercoind_LDADD = \
+bitcfd_LDADD = \
   $(LIBBITCOIN_SERVER) \
   $(LIBBITCOIN_COMMON) \
   $(LIBUNIVALUE) \
@@ -398,38 +398,38 @@ emercoind_LDADD = \
   $(LIBMEMENV) \
   $(LIBSECP256K1)
 
-emercoind_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_OPENSSL_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS)
+bitcfd_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_OPENSSL_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS)
 
 # bitcoin-cli binary #
-emercoin_cli_SOURCES = bitcoin-cli.cpp
-emercoin_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
-emercoin_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-emercoin_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+bitcf_cli_SOURCES = bitcoin-cli.cpp
+bitcf_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
+bitcf_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+bitcf_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-emercoin_cli_SOURCES += bitcoin-cli-res.rc
+bitcf_cli_SOURCES += bitcoin-cli-res.rc
 endif
 
-emercoin_cli_LDADD = \
+bitcf_cli_LDADD = \
   $(LIBBITCOIN_CLI) \
   $(LIBUNIVALUE) \
   $(LIBBITCOIN_UTIL) \
   $(LIBBITCOIN_CRYPTO)
 
-emercoin_cli_LDADD += $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS)
+bitcf_cli_LDADD += $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS)
 #
 
 # bitcoin-tx binary #
-emercoin_tx_SOURCES = bitcoin-tx.cpp
-emercoin_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-emercoin_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-emercoin_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+bitcf_tx_SOURCES = bitcoin-tx.cpp
+bitcf_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+bitcf_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+bitcf_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-emercoin_tx_SOURCES += bitcoin-tx-res.rc
+bitcf_tx_SOURCES += bitcoin-tx-res.rc
 endif
 
-emercoin_tx_LDADD = \
+bitcf_tx_LDADD = \
   $(LIBUNIVALUE) \
   $(LIBBITCOIN_COMMON) \
   $(LIBBITCOIN_UTIL) \
@@ -437,7 +437,7 @@ emercoin_tx_LDADD = \
   $(LIBBITCOIN_CRYPTO) \
   $(LIBSECP256K1)
 
-emercoin_tx_LDADD += $(BOOST_LIBS) $(CRYPTO_LIBS)
+bitcf_tx_LDADD += $(BOOST_LIBS) $(CRYPTO_LIBS)
 #
 
 # emercoinconsensus library #

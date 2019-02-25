@@ -12,7 +12,7 @@ InfoCardTextEdit::InfoCardTextEdit() {
 	new InfoCardHighlighter(document());
 
 	auto completer = new QCompleter(this);
-	_keywords = QString("Import Alias FirstName LastName HomeAddress HomePhone CellPhone Gender Birthdate Email WEB Facebook Twitter EMC BTC").split(' ');
+	_keywords = QString("Import Alias FirstName LastName HomeAddress HomePhone CellPhone Gender Birthdate Email WEB Facebook Twitter BIT BTC").split(' ');
 	qSort(_keywords);
 	auto model = new QStringListModel(_keywords, this);
     completer->setModel(model);
