@@ -36,7 +36,7 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
         return UintToArith256(params.bnInitialHashTarget).GetCompact(); // first block
     const CBlockIndex* pindexPrevPrev = GetLastBlockIndex(pindexPrev->pprev, fProofOfStake);
     if (pindexPrevPrev->pprev == NULL)
-        return UintToArith256(params.bnInitialHashTarget).GetCompact(); // second block
+        return (arith_uint256(UintToArith256(params.bnInitialHashTarget) / 100000)).GetCompact(); // second block
 
     int64_t nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
 
@@ -45,14 +45,13 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     CBigNum bnNew;
     bnNew.SetCompact(pindexPrev->nBits);
 
-    // emercoin: first 10 000 blocks are faster to mine.
-    int64_t nSpacingRatio = (pindexLast->nHeight <= 10000) ? max((int64_t)10, params.nStakeTargetSpacing * pindexLast->nHeight / 10000) :
-                                                             max((int64_t)10, params.nStakeTargetSpacing);
+    int64_t nTargetSpacing = fProofOfStake ?
+        params.nStakeTargetSpacing :
+        min(params.nTargetSpacingMax, params.nStakeTargetSpacing * (1 + pindexLast->nHeight - pindexPrev->nHeight));
 
-    int64_t nTargetSpacing = fProofOfStake? params.nStakeTargetSpacing : min(params.nTargetSpacingMax, nSpacingRatio * (1 + pindexLast->nHeight - pindexPrev->nHeight));
     int64_t nInterval = params.nTargetTimespan / nTargetSpacing;
 
-    int n = fProofOfStake ? 1 : ((pindexLast->nHeight < 6666) ? 1 : 3);
+    int n = fProofOfStake ? 1 : 3;
     bnNew *= ((nInterval - n) * nTargetSpacing + (n + 1) * nActualSpacing);
     bnNew /= ((nInterval + 1) * nTargetSpacing);
 

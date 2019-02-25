@@ -959,13 +959,13 @@ bool AcceptToMemoryPoolWorker(CTxMemPool& pool, CValidationState& state, const C
         // Check against previous transactions
         // This is done last to help prevent CPU exhaustion denial-of-service attacks.
         PrecomputedTransactionData txdata(tx);
-        if (!CheckInputs(tx, state, view, true, scriptVerifyFlags, true, txdata, witnessEnabled, nullptr, fRandPayCheck)) {
+        if (!CheckInputs(tx, state, view, true, scriptVerifyFlags, true, txdata, 0, nullptr, fRandPayCheck)) {
             // SCRIPT_VERIFY_CLEANSTACK requires SCRIPT_VERIFY_WITNESS, so we
             // need to turn both off, and compare against just turning off CLEANSTACK
             // to see if the failure is specifically due to witness validation.
             CValidationState stateDummy; // Want reported failures to be from first CheckInputs
-            if (!tx.HasWitness() && CheckInputs(tx, stateDummy, view, true, scriptVerifyFlags & ~(SCRIPT_VERIFY_WITNESS | SCRIPT_VERIFY_CLEANSTACK), true, txdata, witnessEnabled, nullptr, fRandPayCheck) &&
-                !CheckInputs(tx, stateDummy, view, true, scriptVerifyFlags & ~SCRIPT_VERIFY_CLEANSTACK, true, txdata, witnessEnabled, nullptr, fRandPayCheck)) {
+            if (!tx.HasWitness() && CheckInputs(tx, stateDummy, view, true, scriptVerifyFlags & ~(SCRIPT_VERIFY_WITNESS | SCRIPT_VERIFY_CLEANSTACK), true, txdata, 0, nullptr, fRandPayCheck) &&
+                !CheckInputs(tx, stateDummy, view, true, scriptVerifyFlags & ~SCRIPT_VERIFY_CLEANSTACK, true, txdata, 0, nullptr, fRandPayCheck)) {
                 // Only the witness is missing, so the transaction itself may be fine.
                 state.SetCorruptionPossible();
             }
@@ -981,7 +981,7 @@ bool AcceptToMemoryPoolWorker(CTxMemPool& pool, CValidationState& state, const C
         // There is a similar check in CreateNewBlock() to prevent creating
         // invalid blocks, however allowing such transactions into the mempool
         // can be exploited as a DoS attack.
-        if (!CheckInputs(tx, state, view, true, MANDATORY_SCRIPT_VERIFY_FLAGS, true, txdata, witnessEnabled, nullptr, fRandPayCheck))
+        if (!CheckInputs(tx, state, view, true, MANDATORY_SCRIPT_VERIFY_FLAGS, true, txdata, 0, nullptr, fRandPayCheck))
         {
             return error("%s: BUG! PLEASE REPORT THIS! ConnectInputs failed against MANDATORY but not STANDARD flags %s, %s",
                 __func__, hash.ToString(), FormatStateMessage(state));
@@ -1236,17 +1236,13 @@ CAmount GetProofOfWorkReward(unsigned int nBits, bool fV7Enabled)
     CBigNum bnUpperBound = bnSubsidyLimit;
     CBigNum bnMidPart, bnRewardPart;
 
-    bool bLowDiff = GetDifficulty(nBits) < 512;  //emcTODO - replace this with fixed height
-    bnRewardPart = bLowDiff ? bnSubsidyLimit * bnSubsidyLimit * bnSubsidyLimit * bnSubsidyLimit * bnSubsidyLimit * bnSubsidyLimit :
-                              bnSubsidyLimit * bnSubsidyLimit * bnSubsidyLimit * bnSubsidyLimit;
+    bnRewardPart = bnSubsidyLimit * bnSubsidyLimit * bnSubsidyLimit * bnSubsidyLimit;
     while (bnLowerBound + CENT <= bnUpperBound)
     {
         CBigNum bnMidValue = (bnLowerBound + bnUpperBound) / 2;
-        bnMidPart = bLowDiff ? bnMidValue * bnMidValue * bnMidValue * bnMidValue * bnMidValue * bnMidValue :
-                               bnMidValue * bnMidValue * bnMidValue * bnMidValue;
+        bnMidPart = bnMidValue * bnMidValue * bnMidValue * bnMidValue;
         if (fDebug && GetBoolArg("-printcreation", false))
             LogPrintf("GetProofOfWorkReward() : lower=%lld upper=%lld mid=%lld\n", bnLowerBound.getuint64(), bnUpperBound.getuint64(), bnMidValue.getuint64());
-
         if (bnMidPart * bnTargetLimit > bnRewardPart * bnTarget)
             bnUpperBound = bnMidValue;
         else
@@ -1468,7 +1464,7 @@ int GetSpendHeight(const CCoinsViewCache& inputs)
 }
 
 namespace Consensus {
-bool CheckTxInputs(const CTransaction& tx, CValidationState& state, const CCoinsViewCache& inputs, int nSpendHeight, bool fV7Enabled)
+bool CheckTxInputs(const CTransaction& tx, CValidationState& state, const CCoinsViewCache& inputs, int nSpendHeight, CAmount prevPoWReward)
 {
         // This doesn't trigger the DoS code on purpose; if it did, it would make it easier
         // for an attacker to attempt to split the network.
@@ -1507,7 +1503,7 @@ bool CheckTxInputs(const CTransaction& tx, CValidationState& state, const CCoins
     {
         // ppcoin: coin stake tx earns reward instead of paying fee
         CAmount nLimit = 0;
-        if (!GetEmc7POSReward(tx, inputs, nLimit))
+        if (!GetEmc7POSReward(tx, inputs, nLimit, prevPoWReward))
             return error("CheckTxInputs() : %s unable to get coin reward for coinstake", tx.GetHash().ToString());
         CAmount nStakeReward = tx.GetValueOut() - nValueIn;
         if (nStakeReward > nLimit - tx.GetMinFee() + MIN_TX_FEE)
@@ -1534,11 +1530,11 @@ bool CheckTxInputs(const CTransaction& tx, CValidationState& state, const CCoins
 }
 }// namespace Consensus
 
-bool CheckInputs(const CTransaction& tx, CValidationState &state, const CCoinsViewCache &inputs, bool fScriptChecks, unsigned int flags, bool cacheStore, PrecomputedTransactionData& txdata, bool fV7Enabled, std::vector<CScriptCheck> *pvChecks, bool fRandPayLast)
+bool CheckInputs(const CTransaction& tx, CValidationState &state, const CCoinsViewCache &inputs, bool fScriptChecks, unsigned int flags, bool cacheStore, PrecomputedTransactionData& txdata, CAmount prevPoWReward, std::vector<CScriptCheck> *pvChecks, bool fRandPayLast)
 {
     if (!tx.IsCoinBase())
     {
-        if (!Consensus::CheckTxInputs(tx, state, inputs, GetSpendHeight(inputs), fV7Enabled))
+        if (!Consensus::CheckTxInputs(tx, state, inputs, GetSpendHeight(inputs), prevPoWReward))
             return false;
 
         if (pvChecks)
@@ -1898,7 +1894,7 @@ bool ppcoinContextualBlockChecks(const CBlock& block, CValidationState& state, C
   // compute nStakeModifierChecksum end
 
     if (!CheckStakeModifierCheckpoints(pindex->nHeight, nStakeModifierChecksum))
-        return error("ConnectBlock() : Rejected by stake modifier checkpoint height=%d, modifier=0x%016llx", pindex->nHeight, nStakeModifier);
+        return error("ConnectBlock() : Rejected by stake modifier checkpoint height=%d, modifier=0x%016llx, checksum=0x%016llx", pindex->nHeight, nStakeModifier, nStakeModifierChecksum);
 
     if (fJustCheck)
         return true;
@@ -2117,7 +2113,8 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
 
             std::vector<CScriptCheck> vChecks;
             bool fCacheResults = fJustCheck; /* Don't cache results if we're actually connecting blocks (still consult the cache, though) */
-            if (!CheckInputs(tx, state, view, fScriptChecks, flags, fCacheResults, txdata[i], fV7Enabled, nScriptCheckThreads ? &vChecks : NULL))
+            CAmount prevPoWReward = GetLastBlockIndex(pindex, false)->nMint;
+            if (!CheckInputs(tx, state, view, fScriptChecks, flags, fCacheResults, txdata[i], prevPoWReward, nScriptCheckThreads ? &vChecks : NULL))
                 return error("ConnectBlock(): CheckInputs on %s failed with %s",
                     tx.GetHash().ToString(), FormatStateMessage(state));
             control.Add(vChecks);
@@ -3197,19 +3194,8 @@ bool ContextualCheckBlockHeader(const CBlockHeader& block, bool fProofOfStake, C
     const int nHeight = pindexPrev == NULL ? 0 : pindexPrev->nHeight + 1;
 
     // Check proof-of-work or proof-of-stake
-    if (nHeight > 10000)
-    {
-        if (block.nBits != GetNextTargetRequired(pindexPrev, fProofOfStake, consensusParams))
-             return state.DoS(100, false, REJECT_INVALID, "bad-diffbits", false, "incorrect proof of work");
-    }
-    else
-    {
-        // this is needed only for FirstBitcoinCapitalCorp official blockchain, because of mistake we made at the beginning
-        unsigned int check = GetNextTargetRequired(pindexPrev, fProofOfStake, consensusParams);
-        unsigned int max_error = check / 100000;
-        if (!(block.nBits >= check - max_error && block.nBits <= check + max_error)) // +- 0.001% interval
-             return state.DoS(100, false, REJECT_INVALID, "bad-diffbits", false, "incorrect proof of work");
-    }
+    if (block.nBits != GetNextTargetRequired(pindexPrev, fProofOfStake, consensusParams))
+         return state.DoS(100, false, REJECT_INVALID, "bad-diffbits", false, "incorrect proof of work");
 
     // Check timestamp against prev
     if (block.GetBlockTime() <= pindexPrev->GetMedianTimePast() || block.GetBlockTime() + nMaxClockDrift < pindexPrev->GetBlockTime())
@@ -3247,8 +3233,9 @@ bool ContextualCheckBlock(const CBlock& block, CValidationState& state, const Co
     bool fV7Enabled = IsV7Enabled(pindexPrev, consensusParams);
 
     // Check coinbase reward
+    // first block can have any reward
     CAmount powLimit = block.IsProofOfWork() ? GetProofOfWorkReward(block.nBits, fV7Enabled) - block.vtx[0]->GetMinFee() + MIN_TX_FEE : 0;
-    if (block.vtx[0]->GetValueOut() > powLimit)
+    if (nHeight > 1 && block.vtx[0]->GetValueOut() > powLimit)
         return state.DoS(100, false, REJECT_INVALID, "bad-cb-amount", false, "coinbase pays too much");
 
     if (fV7Enabled) {
@@ -4672,7 +4659,7 @@ public:
 } instance_of_cmaincleanup;
 
 // combination of GetCoinAge() and GetProofOfStakeReward()
-bool GetEmc7POSReward(const CTransaction& tx, const CCoinsViewCache &view, CAmount &nReward)
+bool GetEmc7POSReward(const CTransaction& tx, const CCoinsViewCache &view, CAmount &nReward, CAmount prevPoWReward)
 {
     nReward = 0;
 
@@ -4732,6 +4719,7 @@ bool GetEmc7POSReward(const CTransaction& tx, const CCoinsViewCache &view, CAmou
 
     // Apply 6% APY and round to DP-unit
     nReward = ((bnSatYr * 6 / 100).GetLow64() / TX_DP_AMOUNT) * TX_DP_AMOUNT;
+    nReward = min(nReward, prevPoWReward);
 
     if (fDebug && GetBoolArg("-printcreation", false))
         LogPrintf("GetEmc7POSReward(): create=%s nCoinAge=%s\n", FormatMoney(nReward), bnSatYr.ToString());

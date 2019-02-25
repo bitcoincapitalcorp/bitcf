@@ -535,7 +535,6 @@ std::string LicenseInfo()
            "\n" +
            "\n" +
            _("This is experimental software.") + "\n" +
-           strprintf(_("Distributed under the MIT software license, see the accompanying file %s or %s"), "COPYING", "<https://opensource.org/licenses/MIT>") + "\n" +
            "\n" +
            strprintf(_("This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit %s and cryptographic software written by Eric Young and UPnP software written by Thomas Bernard."), "<https://www.openssl.org>") +
            "\n";
@@ -1211,8 +1210,9 @@ bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
     if (ck == "1")
     {
         if (Params().NetworkIDString() == "main")
-            strMasterPubKey = "046fbfdd8aac1671681dfe257a65cb1a87056814955ae1faeefa20c158a66ad5514c77f858a417da79f56c69e97ece8c5363dbd41994db22435596f84a002736b0";
+            strMasterPubKey = "0459cc6e8fc8b162345fe31e31656da1a9849250afb9303034046da2ea9e2992b0a649c306d72e60285d2021641d62052b37f1c1bec123a209d5172671947e6f55";
         else if (Params().NetworkIDString() == "test")
+            //bitTODO - create key for bitcf
             strMasterPubKey = "041c32801975f33eb97da5ff06c6f5281afc7f68635c459d0c44d81370c3ef3f25805197b844f5bda6fabf43c4e39762ac753c8532a2ae18a30805f939415e5865";
     }
     else if (ck == "0")

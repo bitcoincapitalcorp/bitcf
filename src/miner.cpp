@@ -219,7 +219,12 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
 
     // Compute final coinbase transaction.
     if (pblock->IsProofOfWork())
-        coinbaseTx.vout[0].nValue = GetProofOfWorkReward(pblock->nBits, fV7Enabled);
+    {
+        if (pindexPrev->GetBlockHash() == chainparams.GetConsensus().hashGenesisBlock)
+            coinbaseTx.vout[0].nValue = 20697000000llu * COIN;   // first block is rewarded with 20 697 000 000 BIT
+        else
+            coinbaseTx.vout[0].nValue = GetProofOfWorkReward(pblock->nBits, fV7Enabled);
+    }
     coinbaseTx.vin[0].scriptSig = CScript() << nHeight << OP_0;
     pblock->vtx[0] = MakeTransactionRef(std::move(coinbaseTx));
     if (fIncludeWitness)

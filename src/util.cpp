@@ -853,5 +853,12 @@ int GetNumCores()
 
 std::string CopyrightHolders(const std::string& strPrefix)
 {
-    return "Copyright (С) Emercoin, Bitcoin, PPCoin, Namecoin, Unobtanium Developers";
+    string s =
+       "Copyright (С) Emercoin, Bitcoin, PPCoin, Namecoin, Unobtanium Developers\n"
+       "Electronic Shares Wallet\n"
+       "First Bitcoin Capital Corp\n"
+       "OTC:BITCF\n"
+       "CUSIP: 31932X105\n\n"
+       "For license see the accompanying file COPYING.txt.";
+    return s;
 }

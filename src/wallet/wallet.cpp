@@ -3094,7 +3094,7 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
     CAmount nReward = 0;
     {
         CCoinsViewCache view(pcoinsTip);
-        if (!GetEmc7POSReward(txNew, view, nReward))
+        if (!GetEmc7POSReward(txNew, view, nReward, GetLastBlockIndex(chainActive.Tip(), false)->nMint))
             return error("CreateCoinStake() : %s unable to get coin reward for coinstake", txNew.GetHash().ToString());
         if (nReward <= 10 * TX_DP_AMOUNT)
             return false; // Prevent extra small UTXO
