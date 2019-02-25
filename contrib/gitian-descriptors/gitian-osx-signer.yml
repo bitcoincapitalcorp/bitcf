@@ -1,5 +1,5 @@
 ---
-name: "emercoin-dmg-signer"
+name: "bitcf-dmg-signer"
 suites:
 - "trusty"
 architectures:

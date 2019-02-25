@@ -1,13 +1,13 @@
 *.tar.gz
 
 *.exe
-src/emercoin
-src/emercoind
-src/emercoin-cli
-src/emercoin-tx
-src/test/test_emercoin
-src/test/test_emercoin_fuzzy
-src/qt/test/test_emercoin-qt
+src/bitcf
+src/bitcfd
+src/bitcf-cli
+src/bitcf-tx
+src/test/test_bitcf
+src/test/test_bitcf_fuzzy
+src/qt/test/test_bitcf-qt
 
 # autoreconf
 Makefile.in
@@ -74,12 +74,12 @@ src/qt/test/moc*.cpp
 # Compilation and Qt preprocessor part
 *.qm
 Makefile
-emercoin-qt
-Emercoin-Qt.app
+bitcf-qt
+FirstBitcoinCapitalCorp.app
 
 # Unit-tests
 Makefile.test
-emercoin-qt_test
+bitcf-qt_test
 src/test/buildenv.py
 
 # Resources cpp

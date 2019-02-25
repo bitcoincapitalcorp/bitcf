@@ -1,13 +1,13 @@
 [Unit]
-Description=Emercoin Wallet
+Description=FirstBitcoinCapitalCorp Wallet
 After=network.target
 
 [Service]
 Type=forking
-User=emc
-ExecStart=/usr/bin/emercoind -daemon -datadir=/var/lib/emc/.emercoin -conf=/var/lib/emc/.emercoin/emercoin.conf -pid=/var/lib/emc/.emercoin/emercoind.pid
-ExecStop=/usr/bin/emercoin-cli -datadir=/var/lib/emc/.emercoin stop
-PIDFile=/var/lib/emc/.emercoin/emercoind.pid
+User=bit
+ExecStart=/usr/bin/bitcfd -daemon -datadir=/var/lib/bit/.FirstBitcoinCapitalCorp -conf=/var/lib/bit/.FirstBitcoinCapitalCorp/bitcf.conf -pid=/var/lib/bit/.FirstBitcoinCapitalCorp/bitcfd.pid
+ExecStop=/usr/bin/bitcf-cli -datadir=/var/lib/bit/.FirstBitcoinCapitalCorp stop
+PIDFile=/var/lib/bit/.FirstBitcoinCapitalCorp/bitcfd.pid
 Restart=on-failure
 
 [Install]

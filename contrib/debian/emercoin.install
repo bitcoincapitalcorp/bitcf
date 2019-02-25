@@ -1,7 +1,7 @@
-contrib/debian/emc usr/bin
-contrib/debian/emercoin.conf var/lib/emc/.emercoin
-contrib/debian/emercoind.service lib/systemd/system
-contrib/debian/emercoind.logrotate etc/logrotate.d
-usr/local/bin/emercoind usr/bin
-usr/local/bin/emercoin-cli usr/bin
-usr/local/bin/emercoin-tx usr/bin
+contrib/debian/bit usr/bin
+contrib/debian/bitcf.conf var/lib/bit/.FirstBitcoinCapitalCorp
+contrib/debian/bitcfd.service lib/systemd/system
+contrib/debian/bitcfd.logrotate etc/logrotate.d
+usr/local/bin/bitcfd usr/bin
+usr/local/bin/bitcf-cli usr/bin
+usr/local/bin/bitcf-tx usr/bin

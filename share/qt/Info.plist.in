@@ -11,34 +11,34 @@
   </array>
 
   <key>CFBundleIconFile</key>
-  <string>emercoin.icns</string>
+  <string>bitcf.icns</string>
 
   <key>CFBundlePackageType</key>
   <string>APPL</string>
 
   <key>CFBundleGetInfoString</key>
-  <string>@EMERCOIN_VERSION_MAJOR@.@EMERCOIN_VERSION_MINOR@.@EMERCOIN_VERSION_REVISION@, Copyright © 2009-@COPYRIGHT_YEAR@ @COPYRIGHT_HOLDERS_FINAL@</string>
+  <string>@BITCF_VERSION_MAJOR@.@BITCF_VERSION_MINOR@.@BITCF_VERSION_REVISION@, Copyright © 2009-@COPYRIGHT_YEAR@ @COPYRIGHT_HOLDERS_FINAL@</string>
 
   <key>CFBundleShortVersionString</key>
-  <string>@EMERCOIN_VERSION_MAJOR@.@EMERCOIN_VERSION_MINOR@.@EMERCOIN_VERSION_REVISION@</string>
+  <string>@BITCF_VERSION_MAJOR@.@BITCF_VERSION_MINOR@.@BITCF_VERSION_REVISION@</string>
 
   <key>CFBundleVersion</key>
-  <string>@EMERCOIN_VERSION_MAJOR@.@EMERCOIN_VERSION_MINOR@.@EMERCOIN_VERSION_REVISION@</string>
+  <string>@BITCF_VERSION_MAJOR@.@BITCF_VERSION_MINOR@.@BITCF_VERSION_REVISION@</string>
 
   <key>CFBundleSignature</key>
   <string>????</string>
 
   <key>CFBundleExecutable</key>
-  <string>Emercoin-Qt</string>
+  <string>FirstBitcoinCapitalCorp</string>
   
   <key>CFBundleName</key>
-  <string>Emercoin-Qt</string>
+  <string>FirstBitcoinCapitalCorp</string>
 
   <key>LSHasLocalizedDisplayName</key>
   <true/>
 
   <key>CFBundleIdentifier</key>
-  <string>com.emercoin.Emercoin-Qt</string>
+  <string>com.FirstBitcoinCapitalCorp.FirstBitcoinCapitalCorp</string>
 
   <key>CFBundleURLTypes</key>
   <array>
@@ -46,10 +46,10 @@
       <key>CFBundleTypeRole</key>
       <string>Editor</string>
       <key>CFBundleURLName</key>
-      <string>com.emercoin.EmercoinPayment</string>
+      <string>com.FirstBitcoinCapitalCorp.FirstBitcoinCapitalCorpPayment</string>
       <key>CFBundleURLSchemes</key>
       <array>
-        <string>emercoin</string>
+        <string>FirstBitcoinCapitalCorp</string>
       </array>
     </dict>
   </array>
@@ -58,9 +58,9 @@
   <array>
     <dict>
       <key>UTTypeIdentifier</key>
-      <string>com.emercoin.paymentrequest</string>
+      <string>com.FirstBitcoinCapitalCorp.paymentrequest</string>
       <key>UTTypeDescription</key>
-      <string>Emercoin payment request</string>
+      <string>FirstBitcoinCapitalCorp payment request</string>
       <key>UTTypeConformsTo</key>
       <array>
         <string>public.data</string>
@@ -68,10 +68,10 @@
       <key>UTTypeTagSpecification</key>
       <dict>
         <key>public.mime-type</key>
-        <string>application/x-emercoin-payment-request</string>
+        <string>application/x-bitcf-payment-request</string>
         <key>public.filename-extension</key>
         <array>
-          <string>emercoinpaymentrequest</string>
+          <string>bitcfpaymentrequest</string>
         </array>
       </dict>
     </dict>
@@ -84,7 +84,7 @@
       <string>Editor</string>
       <key>LSItemContentTypes</key>
       <array>
-        <string>com.emercoin.paymentrequest</string>
+        <string>com.FirstBitcoinCapitalCorp.paymentrequest</string>
       </array>
       <key>LSHandlerRank</key>
       <string>Owner</string>

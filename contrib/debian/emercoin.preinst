@@ -5,16 +5,16 @@ set -e
 
 case "$1" in
   install)
-    getent passwd emc >/dev/null || {
-      groupadd -r emc && useradd -r -m -d /var/lib/emc -k /dev/null -s /bin/false -g emc emc
+    getent passwd bit >/dev/null || {
+      groupadd -r bit && useradd -r -m -d /var/lib/bit -k /dev/null -s /bin/false -g bit bit
     }
-    [ ! -f /etc/ssl/emc/emercoin.key ] || [ ! -f /etc/ssl/emc/emercoin.crt ] && {
-      mkdir -p /etc/ssl/emc
-      openssl req -nodes -x509 -newkey rsa:4096 -keyout /etc/ssl/emc/emercoin.key -out /etc/ssl/emc/emercoin.crt -days 3560 -subj /C=CY/L=Nicosia/O=Emercoin/CN=emercoin.local >/dev/null 2>&1
-      chown emc.emc /etc/ssl/emc/emercoin.key /etc/ssl/emc/emercoin.crt
-      chmod 600 /etc/ssl/emc/emercoin.key
+    [ ! -f /etc/ssl/bit/bitcf.key ] || [ ! -f /etc/ssl/bit/bitcf.crt ] && {
+      mkdir -p /etc/ssl/bit
+      openssl req -nodes -x509 -newkey rsa:4096 -keyout /etc/ssl/bit/bitcf.key -out /etc/ssl/bit/bitcf.crt -days 3560 -subj /C=CY/L=Nicosia/O=Bitcf/CN=bitcf.local >/dev/null 2>&1
+      chown bit.bit /etc/ssl/bit/bitcf.key /etc/ssl/bit/bitcf.crt
+      chmod 600 /etc/ssl/bit/bitcf.key
     }
-    touch /var/tmp/emercoin-install.flag
+    touch /var/tmp/bitcf-install.flag
   ;;
 esac
 

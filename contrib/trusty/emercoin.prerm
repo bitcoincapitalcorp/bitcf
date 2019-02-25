@@ -5,10 +5,10 @@ set -e
 
 case "$1" in
   remove|deconfigure|abort-install)
-    rm -f /var/tmp/emercoin-install.flag
-    pkill -9 -u emc > /dev/null 2>&1 || true
-    getent passwd emc >/dev/null && userdel emc >/dev/null 2>&1 || true
-    rm -f /etc/ssl/emc/emercoin.key /etc/ssl/emc/emercoin.crt /etc/emercoin/emercoin.conf /etc/emercoin/certs
+    rm -f /var/tmp/bitcf-install.flag
+    pkill -9 -u bit > /dev/null 2>&1 || true
+    getent passwd bit >/dev/null && userdel bit >/dev/null 2>&1 || true
+    rm -f /etc/ssl/bit/bitcf.key /etc/ssl/bit/bitcf.crt /etc/bitcf/bitcf.conf /etc/bitcf/certs
   ;;
 esac
 
