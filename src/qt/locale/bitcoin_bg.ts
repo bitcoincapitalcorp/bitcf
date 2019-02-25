@@ -62,11 +62,11 @@
         <translation>Адреси за получаване</translation>
     </message>
     <message>
-        <source>These are your Emercoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <source>These are your FirstBitcoinCapitalCorp addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
         <translation>Това са адресите на получателите на плащания. Винаги проверявайте размера на сумата и адреса на получателя, преди да изпратите монети.</translation>
     </message>
     <message>
-        <source>These are your Emercoin addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
+        <source>These are your FirstBitcoinCapitalCorp addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
         <translation>Това са Вашите Емеркойн адреси,благодарение на които ще получавате плащания.Препоръчително е да използвате нови адреси за получаване на всяка транзакция.</translation>
     </message>
     <message>
@@ -168,8 +168,8 @@
         <translation>Потвърдете на шифрирането на портфейла</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR EMERCOINS&lt;/b&gt;!</source>
-        <translation>ВНИМАНИЕ: Ако шифрирате вашият портфейл и изгубите паролата си, &lt;b&gt;ЩЕ ИЗГУБИТЕ ВСИЧКИТЕ СИ ЕМЕРКОИНИ&lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BITS&lt;/b&gt;!</source>
+        <translation>ВНИМАНИЕ: Ако шифрирате вашият портфейл и изгубите паролата си, &lt;b&gt;ЩЕ ИЗГУБИТЕ ВСИЧКИТЕ СИ БИТЫ&lt;/b&gt;!</translation>
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -318,7 +318,7 @@
         <translation>Повторно индексиране на блоковете на диска...</translation>
     </message>
     <message>
-        <source>Send coins to a Emercoin address</source>
+        <source>Send coins to a FirstBitcoinCapitalCorp address</source>
         <translation>Изпращане към Емеркоин адрес</translation>
     </message>
     <message>
@@ -342,7 +342,7 @@
         <translation>&amp;Проверка на съобщение...</translation>
     </message>
     <message>
-        <source>Emercoin</source>
+        <source>FirstBitcoinCapitalCorp</source>
         <translation>Емеркоин</translation>
     </message>
     <message>
@@ -370,11 +370,11 @@
         <translation>Шифроване на личните ключове,които принадлежат на портфейла Ви.</translation>
     </message>
     <message>
-        <source>Sign messages with your Emercoin addresses to prove you own them</source>
+        <source>Sign messages with your FirstBitcoinCapitalCorp addresses to prove you own them</source>
         <translation>Пишете съобщения със своя Емеркойн адрес за да докажете,че е ваш.</translation>
     </message>
     <message>
-        <source>Verify messages to ensure they were signed with specified Emercoin addresses</source>
+        <source>Verify messages to ensure they were signed with specified FirstBitcoinCapitalCorp addresses</source>
         <translation>Потвърждаване на съобщения  за да се знае,че са написани с дадените Емеркойн адреси.</translation>
     </message>
     <message>
@@ -394,7 +394,7 @@
         <translation>Раздели</translation>
     </message>
     <message>
-        <source>Request payments (generates QR codes and emercoin: URIs)</source>
+        <source>Request payments (generates QR codes and bitcf: URIs)</source>
         <translation>Изискване на плащания(генерира QR кодове и емеркойн: URIs)</translation>
     </message>
     <message>
@@ -406,7 +406,7 @@
         <translation>Покажи списък с използваните адреси и имена.</translation>
     </message>
     <message>
-        <source>Open a emercoin: URI or payment request</source>
+        <source>Open a bitcf: URI or payment request</source>
         <translation>Отворете емеркойн: URI  или заявка за плащане</translation>
     </message>
     <message>
@@ -450,7 +450,7 @@
         <translation>Синхронизиран</translation>
     </message>
     <message>
-        <source>Show the %1 help message to get a list with possible Emercoin command-line options</source>
+        <source>Show the %1 help message to get a list with possible FirstBitcoinCapitalCorp command-line options</source>
         <translation>Покажи %1 помощно съобщение за да получиш лист с възможни Емеркойн команди</translation>
     </message>
     <message>
@@ -690,7 +690,7 @@
         <translation>Редактиране на адрес за изпращане</translation>
     </message>
     <message>
-        <source>The entered address "%1" is not a valid Emercoin address.</source>
+        <source>The entered address "%1" is not a valid FirstBitcoinCapitalCorp address.</source>
         <translation>"%1" не е валиден Емеркоин адрес.</translation>
     </message>
     <message>
@@ -904,15 +904,15 @@
         <translation>&amp;Похарчете непотвърденото ресто</translation>
     </message>
     <message>
-        <source>Automatically open the Emercoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Автоматично отваряне на входящия Emercoin порт. Работи само с рутери поддържащи UPnP.</translation>
+        <source>Automatically open the FirstBitcoinCapitalCorp client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Автоматично отваряне на входящия FirstBitcoinCapitalCorp порт. Работи само с рутери поддържащи UPnP.</translation>
     </message>
     <message>
         <source>Map port using &amp;UPnP</source>
         <translation>Отваряне на входящия порт чрез &amp;UPnP</translation>
     </message>
     <message>
-        <source>Connect to the Emercoin network through a SOCKS5 proxy.</source>
+        <source>Connect to the FirstBitcoinCapitalCorp network through a SOCKS5 proxy.</source>
         <translation>Свързване с Емеркойн мрежата чрез SOCKS5  прокси.</translation>
     </message>
     <message>
@@ -1007,7 +1007,7 @@
         <translation>Формуляр</translation>
     </message>
     <message>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Emercoin network after a connection is established, but this process has not completed yet.</source>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the FirstBitcoinCapitalCorp network after a connection is established, but this process has not completed yet.</source>
         <translation>Текущата информация на екрана може да не е актуална. Вашият портфейл ще се синхронизира автоматично с мрежата на Емеркоин, щом поне една връзката с нея се установи; този процес все още не е приключил.</translation>
     </message>
     <message>
@@ -1062,7 +1062,7 @@
         <translation>Възникна грешка по време назаявката за плащане</translation>
     </message>
     <message>
-        <source>Cannot start emercoin: click-to-pay handler</source>
+        <source>Cannot start bitcf: click-to-pay handler</source>
         <translation>Емеркойн не можe да се стартира: click-to-pay handler</translation>
     </message>
     <message>
@@ -1136,7 +1136,7 @@
         <translation>Сума</translation>
     </message>
     <message>
-        <source>Enter a Emercoin address or name (e.g. %1)</source>
+        <source>Enter a FirstBitcoinCapitalCorp address or name (e.g. %1)</source>
         <translation>Въведете Емеркойн адрес (например: %1)</translation>
     </message>
     <message>
@@ -1689,7 +1689,7 @@
         <translation>Заявката за плащане е изтекла.</translation>
     </message>
     <message>
-        <source>Warning: Invalid Emercoin address</source>
+        <source>Warning: Invalid FirstBitcoinCapitalCorp address</source>
         <translation>Внимание: Невалиден Емеркойн адрес</translation>
     </message>
     <message>
@@ -1809,7 +1809,7 @@
         <translation>Копиране на текущия подпис</translation>
     </message>
     <message>
-        <source>Sign the message to prove you own this Emercoin address</source>
+        <source>Sign the message to prove you own this FirstBitcoinCapitalCorp address</source>
         <translation>Подпишете съобщение като доказателство, че притежавате определен адрес</translation>
     </message>
     <message>
@@ -1825,7 +1825,7 @@
         <translation>&amp;Провери</translation>
     </message>
     <message>
-        <source>Verify the message to ensure it was signed with the specified Emercoin address</source>
+        <source>Verify the message to ensure it was signed with the specified FirstBitcoinCapitalCorp address</source>
         <translation>Проверете съобщение, за да сте сигурни че е подписано с определен Емеркоин адрес</translation>
     </message>
     <message>
@@ -2346,7 +2346,7 @@
         <translation>Въведете Ваш публичен адрес</translation>
     </message>
     <message>
-        <source>Emercoin Core</source>
+        <source>FirstBitcoinCapitalCorp Core</source>
         <translation>Емеркойн ядро</translation>
     </message>
     <message>

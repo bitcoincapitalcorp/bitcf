@@ -138,7 +138,7 @@
         <translation>Повторно индексирање на блокови од дискот...</translation>
     </message>
     <message>
-        <source>Send coins to a Emercoin address</source>
+        <source>Send coins to a FirstBitcoinCapitalCorp address</source>
         <translation>Испрати емеркоини на Емеркоин адреса</translation>
     </message>
     <message>
@@ -146,7 +146,7 @@
         <translation>&amp;Потврди порака...</translation>
     </message>
     <message>
-        <source>Emercoin</source>
+        <source>FirstBitcoinCapitalCorp</source>
         <translation>Емеркоин</translation>
     </message>
     <message>
@@ -578,7 +578,7 @@
         <translation>Опции:</translation>
     </message>
     <message>
-        <source>Emercoin Core</source>
+        <source>FirstBitcoinCapitalCorp Core</source>
         <translation>Емеркоин Core</translation>
     </message>
     <message>

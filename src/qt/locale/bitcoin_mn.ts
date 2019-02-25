@@ -126,7 +126,7 @@
         <translation>Оношилгоо ба засварын консолыг онгойлго</translation>
     </message>
     <message>
-        <source>Emercoin</source>
+        <source>FirstBitcoinCapitalCorp</source>
         <translation>Емеркойн</translation>
     </message>
     <message>

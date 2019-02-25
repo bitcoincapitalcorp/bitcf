@@ -130,8 +130,8 @@
         <translation>Kõvakettal olevate plokkide reindekseerimine...</translation>
     </message>
     <message>
-        <source>Emercoin</source>
-        <translation>Emercoin</translation>
+        <source>FirstBitcoinCapitalCorp</source>
+        <translation>FirstBitcoinCapitalCorp</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -760,8 +760,8 @@
         <translation>Valikud:</translation>
     </message>
     <message>
-        <source>Emercoin Core</source>
-        <translation>Emercoin Core</translation>
+        <source>FirstBitcoinCapitalCorp Core</source>
+        <translation>FirstBitcoinCapitalCorp Core</translation>
     </message>
     <message>
         <source>Information</source>

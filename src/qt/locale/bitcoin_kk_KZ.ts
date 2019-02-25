@@ -70,7 +70,7 @@
         <translation>Құпия сөзді өзгерту</translation>
     </message>
     <message>
-        <source>Emercoin</source>
+        <source>FirstBitcoinCapitalCorp</source>
         <translation>Емеркоин</translation>
     </message>
     <message>

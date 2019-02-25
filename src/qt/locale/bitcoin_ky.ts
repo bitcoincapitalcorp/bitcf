@@ -38,8 +38,8 @@
         <translation>Билдирүүнү &amp;текшерүү...</translation>
     </message>
     <message>
-        <source>Emercoin</source>
-        <translation>Emercoin</translation>
+        <source>FirstBitcoinCapitalCorp</source>
+        <translation>FirstBitcoinCapitalCorp</translation>
     </message>
     <message>
         <source>Wallet</source>

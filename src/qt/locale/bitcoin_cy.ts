@@ -114,8 +114,8 @@
         <translation>Newid y cyfrinymadrodd a ddefnyddiwyd ar gyfer amgryptio'r waled</translation>
     </message>
     <message>
-        <source>Emercoin</source>
-        <translation>Emercoin</translation>
+        <source>FirstBitcoinCapitalCorp</source>
+        <translation>FirstBitcoinCapitalCorp</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -484,8 +484,8 @@
         <translation>Opsiynau:</translation>
     </message>
     <message>
-        <source>Emercoin Core</source>
-        <translation>Craidd Emercoin</translation>
+        <source>FirstBitcoinCapitalCorp Core</source>
+        <translation>Craidd FirstBitcoinCapitalCorp</translation>
     </message>
     <message>
         <source>Information</source>

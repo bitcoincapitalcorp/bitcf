@@ -114,8 +114,8 @@
         <translation>Reindexando bloques en el disco...</translation>
     </message>
     <message>
-        <source>Send coins to a Emercoin address</source>
-        <translation>Enviar monedas a una dirección Emercoin</translation>
+        <source>Send coins to a FirstBitcoinCapitalCorp address</source>
+        <translation>Enviar monedas a una dirección FirstBitcoinCapitalCorp</translation>
     </message>
     <message>
         <source>Backup wallet to another location</source>
@@ -130,8 +130,8 @@
         <translation>Abre la consola de depuración y diágnostico</translation>
     </message>
     <message>
-        <source>Emercoin</source>
-        <translation>Emercoin</translation>
+        <source>FirstBitcoinCapitalCorp</source>
+        <translation>FirstBitcoinCapitalCorp</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -158,12 +158,12 @@
         <translation>Encriptar las llaves privadas que pertenecen a tu billetera</translation>
     </message>
     <message>
-        <source>Sign messages with your Emercoin addresses to prove you own them</source>
-        <translation>Firma mensajes con tus direcciones Emercoin para probar que eres dueño de ellas</translation>
+        <source>Sign messages with your FirstBitcoinCapitalCorp addresses to prove you own them</source>
+        <translation>Firma mensajes con tus direcciones FirstBitcoinCapitalCorp para probar que eres dueño de ellas</translation>
     </message>
     <message>
-        <source>Verify messages to ensure they were signed with specified Emercoin addresses</source>
-        <translation>Verificar mensajes para asegurar que estaban firmados con direcciones Emercoin especificas</translation>
+        <source>Verify messages to ensure they were signed with specified FirstBitcoinCapitalCorp addresses</source>
+        <translation>Verificar mensajes para asegurar que estaban firmados con direcciones FirstBitcoinCapitalCorp especificas</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -608,8 +608,8 @@
         <translation>Correr en segundo plano como daemon y aceptar comandos</translation>
     </message>
     <message>
-        <source>Emercoin Core</source>
-        <translation>Emercoin Core</translation>
+        <source>FirstBitcoinCapitalCorp Core</source>
+        <translation>FirstBitcoinCapitalCorp Core</translation>
     </message>
     <message>
         <source>Bind to given address and always listen on it. Use [host]:port notation for IPv6</source>
