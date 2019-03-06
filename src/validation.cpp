@@ -3033,11 +3033,16 @@ bool FindUndoPos(CValidationState &state, int nFile, CDiskBlockPos &pos, unsigne
     return true;
 }
 
-bool CheckBlockHeader(const CBlockHeader& block, CValidationState& state, const Consensus::Params& consensusParams, bool fCheckPOW)
+bool CheckBlockHeader(const CBlockHeader& block, CValidationState& state, const Consensus::Params& consensusParams, bool fCheckPOW, bool fOldClient)
 {
     // Check proof of work matches claimed amount
     if (fCheckPOW && !CheckBlockProofOfWork(&block, consensusParams))
-        return state.DoS(50, false, REJECT_INVALID, "high-hash", false, "proof of work failed");
+    {
+        if (fOldClient)
+            return false;
+        else
+            return state.DoS(50, false, REJECT_INVALID, "high-hash", false, "proof of work failed");
+    }
 
     return true;
 }
@@ -3325,13 +3330,14 @@ bool ContextualCheckBlock(const CBlock& block, CValidationState& state, const Co
     return true;
 }
 
-static bool AcceptBlockHeader(const CBlockHeader& block, bool fProofOfStake, CValidationState& state, const CChainParams& chainparams, CBlockIndex** ppindex)
+static bool AcceptBlockHeader(const CBlockHeader& block, bool fProofOfStake, CValidationState& state, const CChainParams& chainparams, CBlockIndex** ppindex, bool fOldClient=false)
 {
     AssertLockHeld(cs_main);
     // Check for duplicate
     uint256 hash = block.GetHash();
     BlockMap::iterator miSelf = mapBlockIndex.find(hash);
     CBlockIndex *pindex = NULL;
+    bool fSetAsPos = fProofOfStake;
     if (hash != chainparams.GetConsensus().hashGenesisBlock) {
 
         if (miSelf != mapBlockIndex.end()) {
@@ -3344,8 +3350,16 @@ static bool AcceptBlockHeader(const CBlockHeader& block, bool fProofOfStake, CVa
             return true;
         }
 
-        if (!CheckBlockHeader(block, state, chainparams.GetConsensus(), !fProofOfStake))  // this should exectute only for PoW blocks
-            return error("%s: Consensus::CheckBlockHeader: %s, %s", __func__, hash.ToString(), FormatStateMessage(state));
+        if (!CheckBlockHeader(block, state, chainparams.GetConsensus(), !fProofOfStake, fOldClient))  // this should exectute only for PoW blocks
+        {
+            if (fOldClient)
+                fSetAsPos = !fProofOfStake; // our guess was wrong - correct it
+            else
+            {
+                state.DoS(50, false, REJECT_INVALID, "high-hash", false, "proof of work failed");
+                return error("%s: Consensus::CheckBlockHeader: %s, %s", __func__, hash.ToString(), FormatStateMessage(state));
+            }
+        }
 
         // Get prev block index
         CBlockIndex* pindexPrev = NULL;
@@ -3360,12 +3374,12 @@ static bool AcceptBlockHeader(const CBlockHeader& block, bool fProofOfStake, CVa
         if (fCheckpointsEnabled && !CheckIndexAgainstCheckpoint(pindexPrev, state, chainparams, hash))
             return error("%s: CheckIndexAgainstCheckpoint(): %s", __func__, state.GetRejectReason().c_str());
 
-        if (!ContextualCheckBlockHeader(block, fProofOfStake, state, chainparams.GetConsensus(), pindexPrev, GetAdjustedTime()))
+        if (!ContextualCheckBlockHeader(block, fSetAsPos, state, chainparams.GetConsensus(), pindexPrev, GetAdjustedTime()))
             return error("%s: Consensus::ContextualCheckBlockHeader: %s, %s", __func__, hash.ToString(), FormatStateMessage(state));
     }
 
     if (pindex == NULL)
-        pindex = AddToBlockIndex(block, fProofOfStake);
+        pindex = AddToBlockIndex(block, fSetAsPos);
 
     if (ppindex)
         *ppindex = pindex;
@@ -3376,14 +3390,14 @@ static bool AcceptBlockHeader(const CBlockHeader& block, bool fProofOfStake, CVa
 }
 
 // Exposed wrapper for AcceptBlockHeader
-bool ProcessNewBlockHeaders(uint32_t& nPoSTemperature, const uint256& lastAcceptedHeader, const std::vector<CBlockHeader>& headers, CValidationState& state, const CChainParams& chainparams, const CBlockIndex** ppindex)
+bool ProcessNewBlockHeaders(uint32_t& nPoSTemperature, const uint256& lastAcceptedHeader, const std::vector<CBlockHeader>& headers, bool fOldClient, CValidationState& state, const CChainParams& chainparams, const CBlockIndex** ppindex)
 {
     {
         LOCK(cs_main);
         int n = 0;
         for (const CBlockHeader& header : headers) {
             CBlockIndex *pindex = NULL; // Use a temp pindex instead of ppindex to avoid a const_cast
-            if (!AcceptBlockHeader(header, header.nFlags & BLOCK_PROOF_OF_STAKE, state, chainparams, &pindex)) {
+            if (!AcceptBlockHeader(header, header.nFlags & BLOCK_PROOF_OF_STAKE, state, chainparams, &pindex, fOldClient)) {
                 return false;
             }
             if (ppindex) {

@@ -65,3 +65,9 @@ bool IsProtocolV04(unsigned int nTimeBlock)
 {
     return (nTimeBlock >= 1449100800);      // 12/03/2015 @ 12:00am (UTC)
 }
+
+// Whether the given transaction is subject to new v0.5 protocol
+bool IsProtocolV05(unsigned int nTimeTx)
+{
+    return (nTimeTx >= 1449100800);      // 12/03/2015 @ 12:00am (UTC)
+}

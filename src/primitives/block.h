@@ -263,5 +263,6 @@ int64_t GetBlockWeight(const CBlock& tx);
 // Whether the given coinstake is subject to specified protocol
 bool IsProtocolV03(unsigned int nTimeCoinStake);
 bool IsProtocolV04(unsigned int nTimeBlock);
+bool IsProtocolV05(unsigned int nTimeTx);
 
 #endif // BITCOIN_PRIMITIVES_BLOCK_H

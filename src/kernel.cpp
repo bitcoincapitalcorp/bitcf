@@ -12,6 +12,7 @@
 #include "timedata.h"
 #include "consensus/validation.h"
 #include "txdb.h"
+#include "bignum.h"
 
 using namespace std;
 
@@ -285,9 +286,50 @@ struct StakeMod
     int nStakeModifierHeight;
 };
 
+// V0.5: Stake modifier used to hash for a stake kernel is chosen as the stake
+// modifier that is (nStakeMinAge minus a selection interval) earlier than the
+// stake, thus at least a selection interval later than the coin generating the // kernel, as the generating coin is from at least nStakeMinAge ago.
+static bool GetKernelStakeModifierV05(CBlockIndex* pindexPrev, unsigned int nTimeTx, uint64_t& nStakeModifier, int& nStakeModifierHeight, int64_t& nStakeModifierTime, bool fPrintProofOfStake)
+{
+    const Consensus::Params& params = Params().GetConsensus();
+    const CBlockIndex* pindex = pindexPrev;
+    nStakeModifierHeight = pindex->nHeight;
+    nStakeModifierTime = pindex->GetBlockTime();
+    int64_t nStakeModifierSelectionInterval = GetStakeModifierSelectionInterval();
+
+    if (nStakeModifierTime + params.nStakeMinAge - nStakeModifierSelectionInterval <= (int64_t) nTimeTx)
+    {
+        // Best block is still more than
+        // (nStakeMinAge minus a selection interval) older than kernel timestamp
+        if (fPrintProofOfStake)
+            return error("GetKernelStakeModifier() : best block %s at height %d too old for stake",
+                pindex->GetBlockHash().ToString(), pindex->nHeight);
+        else
+            return false;
+    }
+    // loop to find the stake modifier earlier by
+    // (nStakeMinAge minus a selection interval)
+    while (nStakeModifierTime + params.nStakeMinAge - nStakeModifierSelectionInterval >(int64_t) nTimeTx)
+    {
+        if (!pindex->pprev)
+        {   // reached genesis block; should not happen
+            return error("GetKernelStakeModifier() : reached genesis block");
+        }
+        pindex = pindex->pprev;
+        if (pindex->GeneratedStakeModifier())
+        {
+            nStakeModifierHeight = pindex->nHeight;
+            nStakeModifierTime = pindex->GetBlockTime();
+        }
+    }
+    nStakeModifier = pindex->nStakeModifier;
+    return true;
+}
+
+
 // The stake modifier used to hash for a stake kernel is chosen as the stake
 // modifier about a selection interval later than the coin generating the kernel
-static bool GetKernelStakeModifier(CBlockIndex* pindexPrev, uint256 hashBlockFrom, uint64_t& nStakeModifier, int& nStakeModifierHeight, int64_t& nStakeModifierTime, bool fPrintProofOfStake)
+static bool GetKernelStakeModifierV03(CBlockIndex* pindexPrev, uint256 hashBlockFrom, uint64_t& nStakeModifier, int& nStakeModifierHeight, int64_t& nStakeModifierTime, bool fPrintProofOfStake)
 {
     const Consensus::Params& params = Params().GetConsensus();
 #ifdef ENABLE_WALLET
@@ -392,6 +434,15 @@ static bool GetKernelStakeModifier(CBlockIndex* pindexPrev, uint256 hashBlockFro
     return true;
 }
 
+// Get the stake modifier specified by the protocol to hash for a stake kernel
+static bool GetKernelStakeModifier(CBlockIndex* pindexPrev, uint256 hashBlockFrom, unsigned int nTimeTx, uint64_t& nStakeModifier, int& nStakeModifierHeight, int64_t& nStakeModifierTime, bool fPrintProofOfStake)
+{
+    if (IsProtocolV05(nTimeTx))
+        return GetKernelStakeModifierV05(pindexPrev, nTimeTx, nStakeModifier, nStakeModifierHeight, nStakeModifierTime, fPrintProofOfStake);
+    else
+        return GetKernelStakeModifierV03(pindexPrev, hashBlockFrom, nStakeModifier, nStakeModifierHeight, nStakeModifierTime, fPrintProofOfStake);
+}
+
 // ppcoin kernel protocol
 // coinstake must meet hash target according to the protocol:
 // kernel (input 0) must meet the formula
@@ -425,14 +476,14 @@ bool CheckStakeKernelHash(unsigned int nBits, CBlockIndex* pindexPrev, const CBl
     if (nTimeBlockFrom + params.nStakeMinAge > nTimeTx) // Min age requirement
         return error("%s: min age violation", __func__);
 
-    arith_uint256 bnTargetPerCoinDay;
+    CBigNum bnTargetPerCoinDay;
     bnTargetPerCoinDay.SetCompact(nBits);
     int64_t nValueIn = txPrev->vout[prevout.n].nValue;
     // v0.3 protocol kernel hash weight starts from 0 at the 30-day min age
     // this change increases active coins participating the hash and helps
     // to secure the network when proof-of-stake difficulty is low
     int64_t nTimeWeight = min((int64_t)nTimeTx - txPrev->nTime, params.nStakeMaxAge) - (IsProtocolV03(nTimeTx)? params.nStakeMinAge : 0);
-    arith_uint256 bnCoinDayWeight = arith_uint256(nValueIn) * nTimeWeight / COIN / (24 * 60 * 60);
+    CBigNum bnCoinDayWeight = CBigNum(nValueIn) * nTimeWeight / COIN / (24 * 60 * 60);
     // Calculate hash
     CDataStream ss(SER_GETHASH, 0);
     uint64_t nStakeModifier = 0;
@@ -440,7 +491,7 @@ bool CheckStakeKernelHash(unsigned int nBits, CBlockIndex* pindexPrev, const CBl
     int64_t nStakeModifierTime = 0;
     if (IsProtocolV03(nTimeTx))  // v0.3 protocol
     {
-        if (!GetKernelStakeModifier(pindexPrev, blockFrom.GetHash(), nStakeModifier, nStakeModifierHeight, nStakeModifierTime, fPrintProofOfStake))
+        if (!GetKernelStakeModifier(pindexPrev, blockFrom.GetHash(), nTimeTx, nStakeModifier, nStakeModifierHeight, nStakeModifierTime, fPrintProofOfStake))
             return false;
         ss << nStakeModifier;
     }
@@ -450,9 +501,6 @@ bool CheckStakeKernelHash(unsigned int nBits, CBlockIndex* pindexPrev, const CBl
     }
 
     ss << nTimeBlockFrom << nTxPrevOffset << txPrev->nTime << prevout.n << nTimeTx;
-
-    if (nTimeTx >= 1489782503) // block 219831
-        ss << pindexPrev->GetBlockHash();
 
     hashProofOfStake = Hash(ss.begin(), ss.end());
     if (fPrintProofOfStake)
@@ -471,7 +519,7 @@ bool CheckStakeKernelHash(unsigned int nBits, CBlockIndex* pindexPrev, const CBl
     }
 
     // Now check if proof-of-stake hash meets target protocol
-    if (UintToArith256(hashProofOfStake) > bnCoinDayWeight * bnTargetPerCoinDay)
+    if (CBigNum(hashProofOfStake) > bnCoinDayWeight * bnTargetPerCoinDay)
         return false;
     if (fDebug && !fPrintProofOfStake)
     {

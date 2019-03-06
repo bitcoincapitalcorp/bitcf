@@ -1413,6 +1413,12 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
         return false;
     }
 
+    // emercoin: set/unset network serialization mode for new clients
+    if (pfrom->nVersion <= OLD_VERSION)
+        vRecv.SetType(vRecv.GetType() & ~SER_POSMARKER);
+    else
+        vRecv.SetType(vRecv.GetType() | SER_POSMARKER);
+
     // At this point, the outgoing message serialization version can't change.
     const CNetMsgMaker msgMaker(pfrom->GetSendVersion());
 
@@ -2017,7 +2023,7 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
         //emcTODO - do we care about nPoSTemperature inside CMPCTBLOCK?
         uint32_t tmp1;
         uint256 tmp2;
-        if (!ProcessNewBlockHeaders(tmp1, tmp2, {cmpctblock.header}, state, chainparams, &pindex)) {
+        if (!ProcessNewBlockHeaders(tmp1, tmp2, {cmpctblock.header}, false, state, chainparams, &pindex)) {
             int nDoS;
             if (state.IsInvalid(nDoS)) {
                 if (nDoS > 0) {
@@ -2350,7 +2356,7 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
         }
 
         CValidationState state;
-        if (!ProcessNewBlockHeaders(pfrom->nPoSTemperature, pfrom->lastAcceptedHeader, headers, state, chainparams, &pindexLast)) {
+        if (!ProcessNewBlockHeaders(pfrom->nPoSTemperature, pfrom->lastAcceptedHeader, headers, pfrom->nVersion <= OLD_VERSION, state, chainparams, &pindexLast)) {
             int nDoS;
             if (state.IsInvalid(nDoS)) {
                 if (nDoS > 0) {
