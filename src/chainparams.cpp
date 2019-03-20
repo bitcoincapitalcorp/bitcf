@@ -248,7 +248,7 @@ class CTestNetParams : public CChainParams {
 public:
     CTestNetParams() {
         strNetworkID = "test";
-        consensus.BIP34Height = 1;
+        consensus.BIP34Height = 1000;
         consensus.BIP34Hash = uint256();
         consensus.BIP65Height = 1000;
         consensus.BIP66Height = 1000;
@@ -283,7 +283,7 @@ public:
 
         pchMessageStart[0] = 0xcb;
         pchMessageStart[1] = 0xf2;
-        pchMessageStart[2] = 0xc3;
+        pchMessageStart[2] = 0xc0;
         pchMessageStart[3] = 0xef;
         nDefaultPort = 16663;
         nPruneAfterHeight = 1000;
