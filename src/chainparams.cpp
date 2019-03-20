@@ -249,11 +249,11 @@ public:
     CTestNetParams() {
         strNetworkID = "test";
         consensus.BIP34Height = 1;
-        consensus.BIP34Hash = uint256S("0x00000000097af4fce19ca3c9aa688a81a5440f054243112e7d348e8350697827");
-        consensus.BIP65Height = 0;
-        consensus.BIP66Height = 0;
-        consensus.MMHeight = 0;
-        consensus.V7Height = 457;
+        consensus.BIP34Hash = uint256();
+        consensus.BIP65Height = 1000;
+        consensus.BIP66Height = 1000;
+        consensus.MMHeight = 1000;
+        consensus.V7Height = 1000;
         consensus.powLimit = uint256S("0000000fffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~arith_uint256(0) >> 28;
         consensus.bnInitialHashTarget = uint256S("00000007ffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); //~uint256(0) >> 29;
         consensus.nTargetTimespan = 7 * 24 * 60 * 60; // two week
@@ -288,11 +288,10 @@ public:
         nDefaultPort = 16663;
         nPruneAfterHeight = 1000;
 
-        genesis = CreateGenesisBlock(1459780102, 1459780102, 3450927596, 0x1d0fffff, 1, 0);
+        genesis = CreateGenesisBlock(1459780102, 1459780108, 33810254, 0x1d0fffff, 1, 0);
         consensus.hashGenesisBlock = genesis.GetHash();
-        printf("myHash = %s\n", consensus.hashGenesisBlock.ToString().c_str());
-        //assert(consensus.hashGenesisBlock == uint256S("0x0000000810da236a5c9239aa1c49ab971de289dbd41d08c4120fc9c8920d2212"));
-        //assert(genesis.hashMerkleRoot == uint256S("0x00000000f27a49c4c32eb64188c24caa12650d53e2d2be6a84911a0744aae87a"));
+        assert(consensus.hashGenesisBlock == uint256S("0x00000002ac5bf25875b33da52f1615f3856c97ba8c02bc183ddc1da09a20be23"));
+        assert(genesis.hashMerkleRoot == uint256S("0xc762ada066b6c9bef82c44f2ac2ace5eaacb60d5c4294f8ebee66ab3e8a4e33f"));
 
         vFixedSeeds.clear();
         vSeeds.clear();
@@ -374,10 +373,10 @@ public:
         nDefaultPort = 16664;
         nPruneAfterHeight = 1000;
 
-        genesis = CreateGenesisBlock(1459780102, 1459780102, 18330017, 0x1d0fffff, 1, 0);
+        genesis = CreateGenesisBlock(1459780102, 1459780108, 33810254, 0x1d0fffff, 1, 0);
         consensus.hashGenesisBlock = genesis.GetHash();
-//        assert(consensus.hashGenesisBlock == uint256S("0x0000000810da236a5c9239aa1c49ab971de289dbd41d08c4120fc9c8920d2212"));
-//        assert(genesis.hashMerkleRoot == uint256S("0xc762ada066b6c9bef82c44f2ac2ace5eaacb60d5c4294f8ebee66ab3e8a4e33f"));
+        assert(consensus.hashGenesisBlock == uint256S("0x00000002ac5bf25875b33da52f1615f3856c97ba8c02bc183ddc1da09a20be23"));
+        assert(genesis.hashMerkleRoot == uint256S("0xc762ada066b6c9bef82c44f2ac2ace5eaacb60d5c4294f8ebee66ab3e8a4e33f"));
 
         vFixedSeeds.clear(); //!< Regtest mode doesn't have any fixed seeds.
         vSeeds.clear();      //!< Regtest mode doesn't have any DNS seeds.
