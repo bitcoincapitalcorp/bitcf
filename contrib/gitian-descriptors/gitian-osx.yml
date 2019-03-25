@@ -28,7 +28,7 @@ packages:
 - "python-setuptools"
 - "fonts-tuffy"
 remotes:
-- "url": "https://github.com/bitcf/bitcf.git"
+- "url": "https://github.com/bitcoincapitalcorp/bitcf.git"
   "dir": "bitcf"
 files:
 - "MacOSX10.11.sdk.tar.gz"
