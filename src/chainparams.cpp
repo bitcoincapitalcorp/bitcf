@@ -156,12 +156,11 @@ class CMainParams : public CChainParams {
 public:
     CMainParams() {
         strNetworkID = "main";
-        consensus.BIP34Height = 212806;
-        consensus.BIP34Hash = uint256S("0x00000000000000172a635091de597ef16848e9e6b7d3f3471c8724bc3fcc003d");
-        consensus.BIP65Height = 212920;
-        consensus.BIP66Height = 212806;
-        consensus.MMHeight = 219809;
-        consensus.V7Height = 311210;
+        consensus.BIP34Height = 120000;
+        consensus.BIP65Height = 120000;
+        consensus.BIP66Height = 120000;
+        consensus.MMHeight = 120000;
+        consensus.V7Height = 120000;
         consensus.powLimit = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~arith_uint256(0) >> 32;
         consensus.bnInitialHashTarget = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~arith_uint256(0) >> 32;
         consensus.nTargetTimespan = 7 * 24 * 60 * 60; // one week
@@ -249,7 +248,6 @@ public:
     CTestNetParams() {
         strNetworkID = "test";
         consensus.BIP34Height = 1000;
-        consensus.BIP34Hash = uint256();
         consensus.BIP65Height = 1000;
         consensus.BIP66Height = 1000;
         consensus.MMHeight = 1000;
@@ -334,7 +332,6 @@ public:
     CRegTestParams() {
         strNetworkID = "regtest";
         consensus.BIP34Height = 100000000; // BIP34 has not activated on regtest (far in the future so block v1 are not rejected in tests)
-        consensus.BIP34Hash = uint256();
         consensus.BIP65Height = 0; // BIP65 activated on regtest (Used in rpc activation tests)
         consensus.BIP66Height = 0; // BIP66 activated on regtest (Used in rpc activation tests)
         consensus.MMHeight = 0;

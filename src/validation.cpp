@@ -1481,7 +1481,7 @@ bool CheckTxInputs(const CTransaction& tx, CValidationState& state, const CCoins
             // If prev is coinbase, check that it's matured
             if (coins->IsCoinBase() || coins->IsCoinStake()) {
                 // emercoin: at some point we changed coinbase maturity from 12 to 32
-                int cnbMaturity = nSpendHeight > 193912 ? ::Params().GetConsensus().nCoinbaseMaturity : ::Params().GetConsensus().nCoinbaseMaturityOld;
+                int cnbMaturity = nSpendHeight > 120000 ? ::Params().GetConsensus().nCoinbaseMaturity : ::Params().GetConsensus().nCoinbaseMaturityOld;
                 if (nSpendHeight - coins->nHeight < cnbMaturity)
                     return state.Invalid(false,
                         REJECT_INVALID, "bad-txns-premature-spend-of-coinbase/coinstake",
@@ -1997,8 +1997,8 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
     // duplicate transactions descending from the known pairs either.
     // If we're on the known chain at height greater than where BIP34 activated, we can save the db accesses needed for the BIP30 check.
     CBlockIndex *pindexBIP34height = pindex->pprev->GetAncestor(chainparams.GetConsensus().BIP34Height);
-    //Only continue to enforce if we're below BIP34 activation height or the block hash at that height doesn't correspond.
-    fEnforceBIP30 = fEnforceBIP30 && (!pindexBIP34height || !(pindexBIP34height->GetBlockHash() == chainparams.GetConsensus().BIP34Hash));
+    //Only continue to enforce if we're below BIP34 activation height
+    fEnforceBIP30 = fEnforceBIP30 && !pindexBIP34height;
 
     if (fEnforceBIP30) {
         for (const auto& tx : block.vtx) {
