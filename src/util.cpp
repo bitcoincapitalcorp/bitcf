@@ -854,7 +854,7 @@ int GetNumCores()
 std::string CopyrightHolders(const std::string& strPrefix)
 {
     string s =
-       "Copyright (С) Emercoin, Bitcoin, PPCoin, Namecoin, Unobtanium Developers\n"
+       "Copyright (С) Emercoin, Bitcoin, PPCoin, Namecoin, Unobtanium Developers\n\n"
        "Electronic Shares Wallet\n"
        "First Bitcoin Capital Corp\n"
        "OTC:BITCF\n"
