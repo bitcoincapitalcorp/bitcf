@@ -2283,6 +2283,8 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
         headers.resize(nCount);
         {
         LOCK(cs_main);
+        int nPoSTemperature = pfrom->nPoSTemperature;
+        int maxTemp = IsInitialBlockDownload() ? MAX_CONSECUTIVE_POS_HEADERS*30 : MAX_CONSECUTIVE_POS_HEADERS;
         for (unsigned int n = 0; n < nCount; n++) {
             vRecv >> headers[n];
             ReadCompactSize(vRecv); // ignore tx count; assume it is 0.
@@ -2291,14 +2293,13 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
             // emercoin: quick check to see if we should ban peers for PoS spam
             // note: at this point we don't know if PoW headers are valid - we just assume they are
             // so we need to update pfrom->nPoSTemperature once we actualy check them
-            int nPoSTemperature = pfrom->nPoSTemperature;
             bool fPoS = headers[n].nFlags & BLOCK_PROOF_OF_STAKE;
             nPoSTemperature += fPoS ? 1 : -POW_HEADER_COOLING;
             // peer cannot cool himself by PoW headers from other branches
             if (n == 0 && !fPoS && headers[n].hashPrevBlock != pfrom->lastAcceptedHeader)
                 nPoSTemperature += POW_HEADER_COOLING;
             nPoSTemperature = std::max(nPoSTemperature, 0);
-            if (nPoSTemperature >= (int)MAX_CONSECUTIVE_POS_HEADERS) {
+            if (nPoSTemperature >= maxTemp) {
                 pfrom->nPoSTemperature = (MAX_CONSECUTIVE_POS_HEADERS*3)/4;
                 if (Params().NetworkIDString() != "test") {
                     g_connman->Ban(pfrom->addr, BanReasonNodeMisbehaving, GetArg("-bantime", DEFAULT_MISBEHAVING_BANTIME) * 7);
