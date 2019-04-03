@@ -180,10 +180,9 @@ public:
         consensus.fPowAllowMinDifficultyBlocks = false;
 
         // The best chain should have at least this much work.
-        consensus.nMinimumChainTrust = uint256S("0x000000000000000000000000000000000000000000000000002ceae94968cea4"); // at block 250 000
-
+        consensus.nMinimumChainTrust = uint256S("0x00000000000000000000000000000000000000000000000000305cd10c01cde9");
         // By default assume that the signatures in ancestors of this block are valid.
-        consensus.defaultAssumeValid = uint256S("0x3b5b8bb145e5d267b06430582f5efc4a1cbe128a836cdf07ab2000c9caabe550"); // at block 250 000
+        consensus.defaultAssumeValid = uint256S("0x7c1b58a78178af1bef33453b7db1a3d830c477b48939f7a6142d508fb0055cb4"); // at block 94000
 
         consensus.nRejectBlockOutdatedMajority = 850;
         consensus.nToCheckBlockUpgradeMajority = 1000;
@@ -227,6 +226,7 @@ public:
         checkpointData = (CCheckpointData) {
             boost::assign::map_list_of
             ( 0,     uint256S("0x00000000f27a49c4c32eb64188c24caa12650d53e2d2be6a84911a0744aae87a"))
+            ( 94000, uint256S("0x7c1b58a78178af1bef33453b7db1a3d830c477b48939f7a6142d508fb0055cb4"))
         };
 
         chainTxData = ChainTxData{
