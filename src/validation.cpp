@@ -3577,6 +3577,8 @@ bool TestBlockValidity(CValidationState& state, const CChainParams& chainparams,
     CBlockIndex indexDummy(block);
     indexDummy.pprev = pindexPrev;
     indexDummy.nHeight = pindexPrev->nHeight + 1;
+    if (block.IsProofOfStake())
+        indexDummy.SetProofOfStake();
 
     // NOTE: CheckBlockHeader is called by CheckBlock
     if (!ContextualCheckBlockHeader(block, block.IsProofOfStake(), state, chainparams.GetConsensus(), pindexPrev, GetAdjustedTime()))
