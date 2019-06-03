@@ -2020,10 +2020,7 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
 
         const CBlockIndex *pindex = NULL;
         CValidationState state;
-        //emcTODO - do we care about nPoSTemperature inside CMPCTBLOCK?
-        uint32_t tmp1;
-        uint256 tmp2;
-        if (!ProcessNewBlockHeaders(tmp1, tmp2, {cmpctblock.header}, false, state, chainparams, &pindex)) {
+        if (!ProcessNewBlockHeaders(pfrom->nPoSTemperature, chainActive.Tip()->GetBlockHash(), {cmpctblock.header}, false, state, chainparams, &pindex)) {
             int nDoS;
             if (state.IsInvalid(nDoS)) {
                 if (nDoS > 0) {
@@ -2032,6 +2029,14 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
                 }
                 LogPrintf("Peer %d sent us invalid header via cmpctblock\n", pfrom->id);
                 return true;
+            }
+        }
+
+        if (pfrom->nPoSTemperature >= (int)MAX_CONSECUTIVE_POS_HEADERS) {
+            pfrom->nPoSTemperature = (MAX_CONSECUTIVE_POS_HEADERS*3)/4;
+            if (Params().NetworkIDString() != "test") {
+                g_connman->Ban(pfrom->addr, BanReasonNodeMisbehaving, GetArg("-bantime", DEFAULT_MISBEHAVING_BANTIME) * 7);
+                return error("too many consecutive pos headers");
             }
         }
 

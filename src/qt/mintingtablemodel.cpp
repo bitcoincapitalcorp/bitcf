@@ -77,7 +77,6 @@ public:
             LOCK2(cs_main, wallet->cs_wallet);
             for(std::map<uint256, CWalletTx>::iterator it = wallet->mapWallet.begin(); it != wallet->mapWallet.end(); ++it)
             {
-                LogPrintf("myHashNew = %s\n", it->first.ToString());
                 std::vector<KernelRecord> txList = KernelRecord::decomposeOutput(wallet, it->second);
                 if(KernelRecord::showTransaction(it->second))
                     for(const KernelRecord& kr : txList) {
