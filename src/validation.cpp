@@ -3402,16 +3402,27 @@ bool ProcessNewBlockHeaders(uint32_t& nPoSTemperature, const uint256& lastAccept
         }
 
         for (const CBlockHeader& header : headers) {
+            bool fPoS = header.nFlags & BLOCK_PROOF_OF_STAKE;
+            bool fHavePoW = !fPoS && mapBlockIndex.count(header.GetHash());
+
             CBlockIndex *pindex = NULL; // Use a temp pindex instead of ppindex to avoid a const_cast
-            if (!AcceptBlockHeader(header, header.nFlags & BLOCK_PROOF_OF_STAKE, state, chainparams, &pindex, fOldClient)) {
+            if (!AcceptBlockHeader(header, header.nFlags & BLOCK_PROOF_OF_STAKE, state, chainparams, &pindex)) {
+                nPoSTemperature += POW_HEADER_COOLING;
                 return false;
             }
             if (ppindex) {
                 *ppindex = pindex;
             }
-            bool fPoS = header.nFlags & BLOCK_PROOF_OF_STAKE;
-            nPoSTemperature += fPoS ? 1 : -nCooling;
-            nPoSTemperature = std::max((int)nPoSTemperature, 0);
+
+            if (fPoS) {
+                nPoSTemperature++;
+            } else { // PoW
+                int d = chainActive.Height() - pindex->nHeight;
+                if (fHavePoW || d > 36)
+                    nCooling = 0;
+                nPoSTemperature -= nCooling;
+                nPoSTemperature = std::max((int)nPoSTemperature, 0);
+            }
         }
     }
     NotifyHeaderTip();
