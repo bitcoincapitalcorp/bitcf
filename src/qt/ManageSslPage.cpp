@@ -21,13 +21,13 @@
 
 
 ManageSslPage::ManageSslPage(QWidget*parent): QDialog(parent) {
-	setWindowTitle(tr("EmerSSL certificates"));
+	setWindowTitle(tr("BitSSL certificates"));
 	setWindowIcon(QIcon(":/icons/EmerSSL-32.png"));
 	_logger = new CertLogger();
 	auto lay = new QVBoxLayout(this);
 	//https://cryptor.net/tutorial/sozdaem-ssl-sertifikat-emcssl-dlya-avtorizacii-na-saytah
 	auto label = new QLabel(
-		"<a href=\"https://docs.emercoin.com/en/Blockchain_Services/EmerSSL/EmerSSL_Introduction.html\">EmerSSL</a> allows you to automatically login without passwords on many sites using certificate, stored in FirstBitcoinCapitalCorp blockchain.");
+		"BitSSL allows you to automatically login without passwords on many sites using certificate, stored in FirstBitcoinCapitalCorp blockchain.");
 	label->setOpenExternalLinks(true);
 	lay->addWidget(label);
 	_view = new CertTableView(_logger);

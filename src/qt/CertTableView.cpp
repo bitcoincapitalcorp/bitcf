@@ -216,7 +216,7 @@ void CertTableView::generateCertForSelectedRow() {
 		_logger->append(msg);
 		return;
 	}
-	if(QMessageBox::question(this, tr("EmerSSL certificate installation"),
+	if(QMessageBox::question(this, tr("BitSSL certificate installation"),
 		tr("Do you want to install newly created certificate into system?"))
 		== QMessageBox::Yes)
 	{

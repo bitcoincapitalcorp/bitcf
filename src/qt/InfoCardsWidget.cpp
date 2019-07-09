@@ -23,7 +23,7 @@ InfoCardsWidget::InfoCardsWidget(QWidget*parent): QDialog(parent) {
 	auto lay = new QVBoxLayout(this);
 	//https://cryptor.net/tutorial/sozdaem-ssl-sertifikat-emcssl-dlya-avtorizacii-na-saytah
 	auto label = new QLabel(
-		"<a href=\"https://docs.emercoin.com/en/Blockchain_Services/EmerSSL/EmerSSL_InfoCard.html\">InfoCards</a> is a decentralized distributed 'business card' system on the FirstBitcoinCapitalCorp blockchain that complements EmerSSL's passwordless login");
+		"InfoCards is a decentralized distributed 'business card' system on the FirstBitcoinCapitalCorp blockchain that complements BitSSL's passwordless login");
 	label->setOpenExternalLinks(true);
 	lay->addWidget(label);
 	_view = new InfoCardTableView(_logger);

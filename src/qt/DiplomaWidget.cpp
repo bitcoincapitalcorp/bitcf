@@ -16,7 +16,6 @@ DiplomaWidget::DiplomaWidget(QWidget*parent): QDialog(parent) {
 	auto lay = new QVBoxLayout(this);
     auto description = new QLabel(tr(	
 		"<a href=\"https://trusted-diploma.com/\">Trusted diploma</a> allows to store academic certificates in blockchain.<br>\n"
-		"<a href=\"https://www.youtube.com/watch?v=ltP57wyIOd8\">Watch video</a>"
 		));	
     description->setOpenExternalLinks(true);
     lay->addWidget(description);

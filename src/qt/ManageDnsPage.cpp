@@ -18,10 +18,9 @@ ManageDnsPage::ManageDnsPage(QWidget*parent): QDialog(parent) {
 	_NVPair = new NameValueLineEdits;
 
     auto description = new QLabel(tr(
-		"<a href=\"https://wiki.emercoin.com/en/EMCDNS\">EmerDNS</a> "
-		"is a decentralized <a href=\"https://en.wikipedia.org/wiki/Domain_Name_System\">domain names system</a>"
+		"BitDNS is a decentralized <a href=\"https://en.wikipedia.org/wiki/Domain_Name_System\">domain names system</a>"
 		" supporting a full range of DNS <a href=\"https://en.wikipedia.org/wiki/List_of_DNS_record_types\">records.</a><br/>"
-		"On this page you can prepare EmerDNS name-value pairs to use them in 'Manage names' tab.<br/>"
+		"On this page you can prepare BitDNS name-value pairs to use them in 'Manage names' tab.<br/>"
 		"Hint: you need only A/AAAA or CNAME fields, not both A and CNAME or AAAA and CNAME."));
     description->setOpenExternalLinks(true);
     lay->addWidget(description);
@@ -37,7 +36,7 @@ ManageDnsPage::ManageDnsPage(QWidget*parent): QDialog(parent) {
     addLineEdit(form, "CNAME", tr("CNAME"), tr("Canonical name; alias of one name to another: the DNS lookup will continue by retrying the lookup with the new name."));
     addLineEdit(form, "PTR", tr("PTR"), tr("Pointer to a canonical name. Unlike a CNAME, DNS processing stops and just the name is returned."));
     addLineEdit(form, "TXT", tr("TXT"), tr("Arbitrary human-readable text. Nowdays more often carries machine-readable data, such as Policy Framework, DKIM, DMARC, DNS-SD, etc."));
-    addLineEdit(form, "SD", tr("SD"), tr("Subdomain - EmerDns feature"));
+    addLineEdit(form, "SD", tr("SD"), tr("Subdomain - BitDNS feature"));
 	lay->addWidget(_NVPair);
   
     {

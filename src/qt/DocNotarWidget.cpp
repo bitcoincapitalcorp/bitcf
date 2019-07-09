@@ -16,7 +16,7 @@ DocNotarWidget::DocNotarWidget(QWidget*parent): QDialog(parent) {
 
 	auto lay = new QVBoxLayout(this);
     auto description = new QLabel(tr(	
-		R"STR(DPO is <a href="https://emercoin.com/en/emerdpo">Digital Proof of Ownership</a>)STR"
+		R"STR(DPO is Digital Proof of Ownership)STR"
 		));	
     description->setOpenExternalLinks(true);
     lay->addWidget(description);

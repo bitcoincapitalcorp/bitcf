@@ -32,7 +32,7 @@
      <item>
       <widget class="QPushButton" name="btnManageDomains">
        <property name="toolTip">
-        <string>Host your domains in EmerDNS system</string>
+        <string>Host your domains in BitDNS system</string>
        </property>
        <property name="text">
         <string>DNS</string>
